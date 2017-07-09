@@ -74,7 +74,7 @@ export class App {
     const quickSuggestions = config.get('quickSuggestions');
     if(!quickSuggestions["strings"]) {
       quickSuggestions["strings"] = true;
-      config.update("quickSuggestions", quickSuggestions);
+      config.update("quickSuggestions", quickSuggestions, true);
     }
   }
 
