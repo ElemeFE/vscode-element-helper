@@ -15,7 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
     let completion = vscode.languages.registerCompletionItemProvider(['vue', 'html'], completionItemProvider, '', ' ', ':', '<', '"', '/', '@');
 
     let disposable = vscode.commands.registerCommand('element-helper.searchUnderCursor', () => {
-        if (context.globalState.get('element-helper.loading')) {
+        console.log(context.workspaceState.get('element-helper.loading', false));
+        if (context.workspaceState.get('element-helper.loading', false)) {
             vscode.window.showInformationMessage('Document is initializing, please wait a minute.');
             return;
         }

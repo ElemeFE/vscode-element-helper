@@ -1,65 +1,137 @@
-# vsc-element-helper README
+# VSCODE-Element-Helper
 
-This is the README for your extension "vsc-element-helper". After writing up a brief description, we recommend including the following sections.
+> VSCODE-Element-Helper is a Atom package for Element-UI. If you use ATOM editor, please go to [ATOM VERDION](https://github.com/ElemeFE/element-helper)
 
-## Features
+Element-UI is a great library. More and more projects use it. So, For helping developer write by Element-UI more efficient, Element-Helper is born.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Feature
 
-For example if there is an image subfolder under your extension project workspace:
+* Document
 
-\!\[feature X\]\(images/feature-x.png\)
+* Autocomplete
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+* Snippets
 
-## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Document
 
-## Extension Settings
+### Usage
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1 - Move cursor to Element-UI tag or select it
 
-For example:
+2 - Press default hot key `ctrl + cmd + z` or 
+  
+    Press ⇧⌘P to bring up the Command Palette and then input `elemeent-helper.search`
 
-This extension contributes the following settings:
+3 - Show document view If complete matching,
+    
+    or you should select tag you want to search
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+4 - Enter and trigger document browser
 
-## Known Issues
+![document](https://user-images.githubusercontent.com/1659577/27990775-4b7db888-6494-11e7-9b27-3ec7fa5f99b7.gif)
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+### Version and Language Switching
 
-## Release Notes
+1 - Enter `Preferences` -> `setting` or shortcut `cmd` + `,`
 
-Users appreciate release notes as you update your extension.
+2 - Modify language or version what do you want 
+```javascript
+  "element-helper.language": "zh-CN",
+  "element-helper.version": "1.3"
+```
 
-### 1.0.0
+### Auto Update Mechanism
 
-Initial release of ...
+Document is off-line and auto synchronize with Element-UI official site.
 
-### 1.0.1
+### Keymap
 
-Fixed issue #.
+Default hot key is  `ctrl + cmd + z`. If it has conflicts with other software's hot key. You can customize it. see [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor)
 
-### 1.1.0
 
-Added features X, Y, and Z.
+## Autocomplete
 
------------------------------------------------------------------------------------------------------------
+![autocomplete](https://user-images.githubusercontent.com/1659577/27990774-4b7b3662-6494-11e7-83a4-9e6ed3ef698a.gif)
 
-## Working with Markdown
+* Distinguish and auto complete property and method for every Element-UI tag
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+* Prompt value when value is some special type like Boolean or ICON.
 
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
 
-### For more information
+## Snippets
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+![snippets](https://user-images.githubusercontent.com/1659577/27990776-4b9386f4-6494-11e7-9c08-596a13afd706.gif)
 
-**Enjoy!**
+Support snippets list:
+
+* `msg`
+
+  ```
+  this.$message({
+    message: '',
+    type: ''
+  })
+  ```
+
+* `alert`
+
+  ```
+  this.$alert('', '', {
+    confirmButtonText: '',
+    callback: () => {}
+  });
+  ```
+
+* `confirm`
+
+  ```
+  this.$confirm('', '', {
+    confirmButtonText: '',
+    cancelButtonText: '',
+    type: ''
+  }).then(() => {})
+    .catch(() => {});
+  ```
+
+* `prompt`
+
+  ```
+  this.$prompt('', '', {
+    confirmButtonText: '',
+    cancelButtonText: '',
+    inputPattern: //,
+    inputErrorMessage: ''
+  }).then(({ value }) => {})
+    .catch(() => {});
+  ```
+
+* `msgb`
+
+  ```
+  this.$msgbox({
+    title: '',
+    message: '',
+    showCancelButton: '',
+    confirmButtonText: '',
+    cancelButtonText: '',
+    beforeClose: (action, instance, done) => {}
+  }).then(action => {});
+  ```
+
+* `notify`
+
+  ```
+  this.$notify({
+    title: '',
+    message: ''
+  });
+  ```
+
+## Contribution
+
+Your pull request will make Element-Helper better.
+
+## LICENSE
+
+MIT

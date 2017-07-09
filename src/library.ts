@@ -73,10 +73,10 @@ class Library {
         .then((online: string) => {
           const oldVersions = this.getValues(JSON.parse(local));
           const newVersions = this.getValues(JSON.parse(online));
-          this.context.globalState.update('element-helper.loading', true);
           if (newVersions.length > oldVersions.length) {
+            this.context.workspaceState.update('element-helper.loading', true);
             exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh`, (err, stdout) => {
-              this.context.globalState.update('element-helper.loading', undefined);
+              this.context.workspaceState.update('element-helper.loading', false);
               if (err) return;
               this.setVersionSchema(newVersions);
               Resource.updateResource();
@@ -89,9 +89,9 @@ class Library {
         .then((online: string) => {
           const versions = this.getValues(JSON.parse(online));
           this.setVersionSchema(versions);
-          this.context.globalState.update('element-helper.loading', true);
+          this.context.workspaceState.update('element-helper.loading', true);
           exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh first`, (err, stdout) => {
-            this.context.globalState.update('element-helper.loading', undefined);
+            this.context.workspaceState.update('element-helper.loading', false);
             if (err) {
               window.showInformationMessage('Load document failure, please check your network.');
               return;
