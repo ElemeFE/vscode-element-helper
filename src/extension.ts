@@ -19,6 +19,15 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('Document is initializing, please wait a minute.');
             return;
         }
+        
+        switch(vscode.window.activeTextEditor.document.languageId) {
+            case 'vue':
+            case 'html':
+                break;
+            default:
+                return;
+        }
+
         const selection =  app.getSeletedText();
         let items = library.queryAll().map(item => {
             return {
