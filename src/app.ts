@@ -73,8 +73,7 @@ export class App {
     const config = workspace.getConfiguration('editor');
     const quickSuggestions = config.get('quickSuggestions');
     if(!quickSuggestions["strings"]) {
-      quickSuggestions["strings"] = true;
-      config.update("quickSuggestions", quickSuggestions, true);
+      config.update("quickSuggestions", { "string": true }, true);
     }
   }
 
@@ -173,7 +172,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   }
 
   getPreAttr(): string | undefined {
-    let txt = this.getTextBeforePosition(this._position);
+    let txt = this.getTextBeforePosition(this._position).replace(/"[^'"]*(\s*)[^'"]*$/, '');
     let end = this._position.character;
     let start = txt.lastIndexOf(' ', end) + 1;
     let parsedTxt = this._document.getText(new Range(this._position.line, start, this._position.line, end));
