@@ -1,6 +1,6 @@
 # VSCODE-Element-Helper
 
-> VSCODE-Element-Helper is a Atom package for Element-UI. If you use ATOM editor, please go to [ATOM VERDION](https://github.com/ElemeFE/element-helper)
+> VSCODE-Element-Helper is a Atom package for Element-UI. If you use ATOM editor, please go to [ATOM VERSION](https://github.com/ElemeFE/element-helper)
 
 Element-UI is a great library. More and more projects use it. So, For helping developer write by Element-UI more efficient, Element-Helper is born.
 
@@ -20,11 +20,9 @@ Element-UI is a great library. More and more projects use it. So, For helping de
 1 - Move cursor to Element-UI tag or select it
 
 2 - Press default hot key `ctrl + cmd + z` or 
-  
     Press ⇧⌘P to bring up the Command Palette and then input `elemeent-helper.search`
 
 3 - Show document view If complete matching,
-    
     or you should select tag you want to search
 
 4 - Enter and trigger document browser
