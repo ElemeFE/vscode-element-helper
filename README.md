@@ -20,7 +20,7 @@ Element-UI is a great library. More and more projects use it. So, For helping de
 1 - Move cursor to Element-UI tag or select it
 
 2 - Press default hot key `ctrl + cmd + z` or 
-    Press ⇧⌘P to bring up the Command Palette and then input `elemeent-helper.search`
+    Press ⇧⌘P to bring up the Command Palette and then input `element-helper.search`
 
 3 - Show document view If complete matching,
     or you should select tag you want to search
