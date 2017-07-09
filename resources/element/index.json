@@ -1,0 +1,439 @@
+{
+  "entries": [
+    {
+      "type": "basic",
+      "name": "Layout 布局",
+      "path": "layout",
+      "tag": "el-row",
+      "description": "el-row,Layout 布局"
+    },
+    {
+      "type": "basic",
+      "name": "Layout 布局",
+      "path": "layout",
+      "tag": "el-col",
+      "description": "el-col,Layout 布局"
+    },
+    {
+      "type": "basic",
+      "name": "Color 色彩",
+      "path": "color",
+      "tag": "color",
+      "description": "color,Color 色彩"
+    },
+    {
+      "type": "basic",
+      "name": "Typography 字体",
+      "path": "typography",
+      "tag": "typography",
+      "description": "typography,Typography 字体"
+    },
+    {
+      "type": "basic",
+      "name": "Icon 图标",
+      "path": "icon",
+      "tag": "icon",
+      "description": "icon,Icon 图标"
+    },
+    {
+      "type": "basic",
+      "name": "Button 按钮",
+      "path": "button",
+      "tag": "el-button",
+      "description": "el-button,Button 按钮"
+    },
+    {
+      "type": "form",
+      "name": "Radio 单选框组",
+      "path": "radio",
+      "tag": "el-radio",
+      "description": "el-radio,Radio 单选框"
+    },
+    {
+      "type": "form",
+      "name": "Radio 单选框组",
+      "path": "radio",
+      "tag": "el-radio-group",
+      "description": "el-radio-group,Radio 单选框组"
+    },
+    {
+      "type": "form",
+      "name": "Checkbox 多选框",
+      "path": "checkbox",
+      "tag": "el-checkbox",
+      "description": "el-checkbox,Checkbox 多选框"
+    },
+    {
+      "type": "form",
+      "name": "Checkbox 多选框",
+      "path": "checkbox",
+      "tag": "el-checkbox-group",
+      "description": "el-checkbox-group,Checkbox 多选框"
+    },
+    {
+      "type": "form",
+      "name": "Input 输入框",
+      "path": "input",
+      "tag": "el-input",
+      "description": "el-input,Input 输入框"
+    },
+    {
+      "type": "form",
+      "name": "Input 输入框",
+      "path": "input",
+      "tag": "el-autocomplete",
+      "description": "el-autocomplete,Input 输入框"
+    },
+    {
+      "type": "form",
+      "name": "InputNumber 计数器",
+      "path": "input-number",
+      "tag": "el-input-number",
+      "description": "el-input-number,InputNumber 计数器"
+    },
+    {
+      "type": "form",
+      "name": "Select 选择器",
+      "path": "select",
+      "tag": "el-select",
+      "description": "el-select,Select 选择器"
+    },
+    {
+      "type": "form",
+      "name": "Select 选择器",
+      "path": "select",
+      "tag": "el-option",
+      "description": "el-option,Select 选择器"
+    },
+    {
+      "type": "form",
+      "name": "Select 选择器",
+      "path": "select",
+      "tag": "el-option-group",
+      "description": "el-option-group,Select 选择器"
+    },
+    {
+      "type": "form",
+      "name": "Cascader 级联选择器",
+      "path": "cascader",
+      "tag": "el-cascader",
+      "description": "el-cascader,Cascader 级联选择器"
+    },
+    {
+      "type": "form",
+      "name": "Switch 开关",
+      "path": "switch",
+      "tag": "el-switch",
+      "description": "el-switch,Switch 开关"
+    },
+    {
+      "type": "form",
+      "name": "Slider 滑块",
+      "path": "slider",
+      "tag": "el-slider",
+      "description": "el-slider,Slider 滑块"
+    },
+    {
+      "type": "form",
+      "name": "TimerPicker 时间选择器",
+      "path": "time-picker",
+      "tag": "el-time-picker",
+      "description": "el-time-picker,TimerPicker 时间选择器"
+    },
+    {
+      "type": "form",
+      "name": "TimerPicker 时间选择器",
+      "path": "time-picker",
+      "tag": "el-time-select",
+      "description": "el-time-select,TimerPicker 时间选择器"
+    },
+    {
+      "type": "form",
+      "name": "DatePicker 日期选择器",
+      "path": "date-picker",
+      "tag": "el-date-picker",
+      "description": "el-date-picker,DatePicker 日期选择器"
+    },
+    {
+      "type": "form",
+      "name": "DateTimePicker 日期时间选择器",
+      "path": "datetime-picker",
+      "tag": "el-datetime-picker",
+      "description": "el-datetime-picker,DateTimePicker 日期时间选择器"
+    },
+    {
+      "type": "form",
+      "name": "Upload 上传",
+      "path": "upload",
+      "tag": "el-upload",
+      "description": "el-upload,Upload 上传"
+    },
+    {
+      "type": "form",
+      "name": "Rate 评分",
+      "path": "rate",
+      "tag": "el-rate",
+      "description": "el-rate,Rate 评分"
+    },
+    {
+      "type": "form",
+      "name": "ColorPicker 颜色选择器",
+      "path": "color-picker",
+      "tag": "el-color-picker",
+      "description": "el-color-picker,ColorPicker 颜色选择器"
+    },
+    {
+      "type": "form",
+      "name": "ransfer 穿梭框",
+      "path": "transfer",
+      "tag": "el-transfer",
+      "description": "el-transfer,ransfer 穿梭框"
+    },
+    {
+      "type": "form",
+      "name": "Form 表单",
+      "path": "form",
+      "tag": "el-form",
+      "description": "el-form,Form 表单"
+    },
+    {
+      "type": "form",
+      "name": "Form 表单",
+      "path": "form",
+      "tag": "el-form-item",
+      "description": "el-form-item,Form 表单"
+    },
+    {
+      "type": "data",
+      "name": "Table 表格",
+      "path": "table",
+      "tag": "el-table",
+      "description": "el-table,Table 表格"
+    },
+    {
+      "type": "data",
+      "name": "Table 表格",
+      "path": "table",
+      "tag": "el-table-column",
+      "description": "el-table-column,Table 表格"
+    },
+    {
+      "type": "data",
+      "name": "Tag 标签",
+      "path": "tag",
+      "tag": "el-tag",
+      "description": "el-tag,Tag 标签"
+    },
+    {
+      "type": "data",
+      "name": "Progress 进度条",
+      "path": "progress",
+      "tag": "el-progress",
+      "description": "el-progress,Progress 进度条"
+    },
+    {
+      "type": "data",
+      "name": "Tree 树形控件",
+      "path": "tree",
+      "tag": "el-tree",
+      "description": "el-tree,Tree 树形控件"
+    },
+    {
+      "type": "data",
+      "name": "Pagination 分页",
+      "path": "pagination",
+      "tag": "el-pagination",
+      "description": "el-pagination,Pagination 分页"
+    },
+    {
+      "type": "data",
+      "name": "Badge 标记",
+      "path": "badge",
+      "tag": "el-badge",
+      "description": "el-badge,Badge 标记"
+    },
+    {
+      "type": "notice",
+      "name": "Alert 警告",
+      "path": "alert",
+      "tag": "el-alert",
+      "description": "el-alert,Alert 警告"
+    },
+    {
+      "type": "notice",
+      "name": "Loading 加载",
+      "path": "loading",
+      "tag": "v-loading",
+      "description": "v-loading,Loading 加载"
+    },
+    {
+      "type": "notice",
+      "name": "Message 消息提示",
+      "path": "message",
+      "tag": "$message",
+      "description": "$message,Message 消息提示"
+    },
+    {
+      "type": "notice",
+      "name": "MessageBox 弹框",
+      "path": "message-box",
+      "tag": "$alert",
+      "description": "$alert,MessageBox 弹框"
+    },
+    {
+      "type": "notice",
+      "name": "MessageBox 弹框",
+      "path": "message-box",
+      "tag": "$prompt",
+      "description": "$prompt,MessageBox 弹框"
+    },
+    {
+      "type": "notice",
+      "name": "MessageBox 弹框",
+      "path": "message-box",
+      "tag": "$msgbox",
+      "description": "$msgbox,MessageBox 弹框"
+    },
+    {
+      "type": "notice",
+      "name": "Notification 通知",
+      "path": "notification",
+      "tag": "$notify",
+      "description": "$notify,Notification 通知"
+    },
+    {
+      "type": "navigation",
+      "name": "NavMenu 导航菜单",
+      "path": "menu",
+      "tag": "el-menu",
+      "description": "el-menu,NavMenu 导航菜单"
+    },
+    {
+      "type": "navigation",
+      "name": "NavMenu 导航菜单",
+      "path": "menu",
+      "tag": "el-submenu",
+      "description": "el-submenu,NavMenu 导航菜单"
+    },
+    {
+      "type": "navigation",
+      "name": "NavMenu 导航菜单",
+      "path": "menu",
+      "tag": "el-menu-item",
+      "description": "el-menu-item,NavMenu 导航菜单"
+    },
+    {
+      "type": "navigation",
+      "name": "Tabs 标签页",
+      "path": "tabs",
+      "tag": "el-tabs",
+      "description": "el-tabs,Tabs 标签页"
+    },
+    {
+      "type": "navigation",
+      "name": "Tabs 标签页",
+      "path": "tabs",
+      "tag": "el-tab-pane",
+      "description": "el-tab-pane,Tabs 标签页"
+    },
+    {
+      "type": "navigation",
+      "name": "Breadcrumb 面包屑",
+      "path": "breadcrumb",
+      "tag": "el-breadcrumb",
+      "description": "el-breadcrumb,Breadcrumb 面包屑"
+    },
+    {
+      "type": "navigation",
+      "name": "Dropdown 下拉菜单",
+      "path": "dropdown",
+      "tag": "el-dropdown",
+      "description": "el-dropdown,Dropdown 下拉菜单"
+    },
+    {
+      "type": "navigation",
+      "name": "Dropdown 下拉菜单",
+      "path": "dropdown",
+      "tag": "el-dropdown-menu",
+      "description": "el-dropdown-menu,Dropdown 下拉菜单"
+    },
+    {
+      "type": "navigation",
+      "name": "Dropdown 下拉菜单",
+      "path": "dropdown",
+      "tag": "el-dropdown-item",
+      "description": "el-dropdown-item,Dropdown 下拉菜单"
+    },
+    {
+      "type": "navigation",
+      "name": "Steps 步骤条",
+      "path": "steps",
+      "tag": "el-steps",
+      "description": "el-steps,Steps 步骤条"
+    },
+    {
+      "type": "others",
+      "name": "Dialog 对话框",
+      "path": "dialog",
+      "tag": "el-dialog",
+      "description": "el-dialog,Dialog 对话框"
+    },
+    {
+      "type": "others",
+      "name": "Tooltip 文字提示",
+      "path": "tooltip",
+      "tag": "el-tooltip",
+      "description": "el-tooltip,Tooltip 文字提示"
+    },
+    {
+      "type": "others",
+      "name": "Popover 弹出框",
+      "path": "popover",
+      "tag": "el-popover",
+      "description": "el-popover,Popover 弹出框"
+    },
+    {
+      "type": "others",
+      "name": "Card 卡片",
+      "path": "card",
+      "tag": "el-card",
+      "description": "el-card,Card 卡片"
+    },
+    {
+      "type": "others",
+      "name": "Carousel 走马灯",
+      "path": "carousel",
+      "tag": "el-carousel",
+      "description": "el-carousel,Carousel 走马灯"
+    },
+    {
+      "type": "others",
+      "name": "Carousel 走马灯",
+      "path": "carousel",
+      "tag": "el-carousel-item",
+      "description": "el-carousel-item,Carousel 走马灯"
+    },
+    {
+      "type": "others",
+      "name": "Collapse 折叠面板",
+      "path": "collapse",
+      "tag": "el-collapse",
+      "description": "el-collapse,Collapse 折叠面板"
+    },
+    {
+      "type": "others",
+      "name": "Collapse 折叠面板",
+      "path": "collapse",
+      "tag": "el-collapse-item",
+      "description": "el-collapse-item,Collapse 折叠面板"
+    }
+  ],
+  "types": [
+    {"name": "basic"},
+    {"name": "form"},
+    {"name": "data"},
+    {"name": "notice"},
+    {"name": "navigation"},
+    {"name": "others"}
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "message": {
+    "prefix": "msg",
+    "body": [
+      "this.\\$message({",
+      "  message: '${1:text}'",
+      "  type: '${2:info}'",
+      "});"
+    ],
+    "description": "message"
+  },
+  "msgbox-alert": {
+    "prefix": "alert",
+    "body": [
+      "this.\\$alert('${1:content}', '${2:title}', {",
+      "  confirmButtonText: '${3:confirm}',",
+      "  callback: ${4:action} => {",
+      "    ",
+      "  }",
+      "});"
+    ],
+    "description": "alert"
+  },
+  "msgbox-confirm": {
+    "prefix": "confirm",
+    "body": [
+      "this.\\$confirm('${1:content}', '${2:title}', {",
+      "  confirmButtonText: '${3:confirm}',",
+      "  cancelButtonText: '${4:cancel}',",
+      "  type: '${5:warning}'",
+      "}).then(() => {",
+      "  ",
+      "}).catch(() => {});"
+    ],
+    "description": "confirm"
+  },
+  "msgbox-prompt": {
+    "prefix": "prompt",
+    "body": [
+      "this.\\$prompt('${1:content}', '${2:title}', {",
+      "  confirmButtonText: '${3:confirm}',",
+      "  cancelButtonText: '${4:cancel}',",
+      "  inputPattern: /${5:regExp}/,",
+      "  inputErrorMessage: '${6:errormsg}'",
+      "}).then(({ value }) => {",
+      "  ",
+      "}).catch(() => {});"
+    ],
+    "description": "prompt"
+  },
+  "msgbox": {
+    "prefix": "msgb",
+    "body": [
+      "this.\\$msgbox({",
+      "  title: '${1:title}',",
+      "  message: '${2:string|VNode}',",
+      "  showCancelButton: ${3:true},",
+      "  confirmButtonText: '${4:confirm}',",
+      "  cancelButtonText: '${5:cancel}',",
+      "  beforeClose: (action, instance, done) => {}",
+      "}).then(action => {",
+      "  ",
+      "});"
+    ],
+    "description": "msgbox"
+  },
+  "notification": {
+    "prefix": "notify",
+    "body": [
+      "this.\\$notify({",
+      "  title: '${1:title}',",
+      "  message: '${2:string|VNode}'",
+      "});"
+    ],
+    "description": "notify"
+  }
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "type": "element",
+    "name": "Element UI",
+    "links": {
+      "home": "http://element.eleme.io",
+      "source": "https://github.com/ElemeFE/element"
+    }
+  }
+]
