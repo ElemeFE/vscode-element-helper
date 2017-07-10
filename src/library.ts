@@ -38,6 +38,11 @@ class Library {
   }
 
   fetchRepo() {
+    // tentative plan: solve loading.
+    fs.access(Resource.ELEMENT_PATH, (err) => {
+      if (err) return;
+      Resource.updateResource();
+    });
     return Resource.get(Resource.RESOURCE_REPO)
       .then((result: string) => {
         this.repos = JSON.parse(result)
