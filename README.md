@@ -128,7 +128,7 @@ Support snippets list:
 
 ## Contribution
 
-Your pull request will make Element-Helper better.
+Your pull request will make VSCode-Element-Helper better.
 
 ## LICENSE
 
