@@ -189,7 +189,8 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   matchTag(reg: RegExp, txt: string, line: number): TagObject | string {
     let match: RegExpExecArray;
     let arr: TagObject[] = [];
-    if (/<\/?[-\w]+[^<>]*>[\s\w]*<?\s*[\w-]*$/.test(txt) || (this._position.line === line && /^\s*[^<]+\s*>[^<\/>]*$/.test(txt))) {
+ 
+    if (/<\/?[-\w]+[^<>]*>[\s\w]*<?\s*[\w-]*$/.test(txt) || (this._position.line === line && (/^\s*[^<]+\s*>[^<\/>]*$/.test(txt) || /[^<>]*<$/.test(txt[txt.length - 1])))) {
       return 'break';
     }
     while((match = reg.exec(txt))) {
@@ -366,7 +367,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
       return this.getAttrValueSuggestion(tag.text, attr);
     } else if(this.isAttrStart(tag)) {
       return this.getAttrSuggestion(tag.text);
-    } else if (this.isTagStart() && !this.notInTemplate()) {
+    } else if (this.isTagStart()) {
       switch(document.languageId) {
         case 'vue':
           return this.notInTemplate() ? [] : this.getTagSuggestion();
