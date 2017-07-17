@@ -39,10 +39,10 @@ class Library {
 
   fetchRepo() {
     // tentative plan: solve loading.
-    fs.access(Resource.ELEMENT_PATH, (err) => {
-      if (err) return;
-      Resource.updateResource();
-    });
+    // fs.access(Resource.ELEMENT_PATH, (err) => {
+    //   if (err) return;
+    //   Resource.updateResource();
+    // });
     return Resource.get(Resource.RESOURCE_REPO)
       .then((result: string) => {
         this.repos = JSON.parse(result)
@@ -73,32 +73,34 @@ class Library {
   }
 
   fetchVersion(repo) {
-    Resource.get(`${repo.type}/versions.json`).then((local: string) => {
-      Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, `${repo.type}/versions.json`))
+    const path = `${repo.type}/versions.json`;
+    Resource.get(path).then((local: string) => {
+      Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, path))
         .then((online: string) => {
           const oldVersions = this.getValues(JSON.parse(local));
           const newVersions = this.getValues(JSON.parse(online));
           if (newVersions.length > oldVersions.length) {
             this.context.workspaceState.update('element-helper.loading', true);
-            exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh`, (err, stdout) => {
+            exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh 2>&1 | tee ./app.log`, (err, stdout) => {
               this.context.workspaceState.update('element-helper.loading', false);
               if (err) return;
               this.setVersionSchema(newVersions);
               Resource.updateResource();
-              window.showInformationMessage(`a new ${repo.name} version updated, you can select it on package setting`);
+              window.showInformationMessage(`${repo.name} version updated to ${newVersions[newVersions.length - 1]}`);
             });
           }
         });
     }).catch(error => {
-      Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, `${repo.type}/versions.json`))
+      Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, path))
         .then((online: string) => {
           const versions = this.getValues(JSON.parse(online));
           this.setVersionSchema(versions);
           this.context.workspaceState.update('element-helper.loading', true);
-          exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh first`, (err, stdout) => {
+          exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh first 2>&1 | tee ./app.log`, (err, stdout) => {
             this.context.workspaceState.update('element-helper.loading', false);
             if (err) {
-              window.showInformationMessage('Load document failure, please check your network.');
+              window.showInformationMessage('Load document failure, please check your network and reload.');
+
               return;
             }
             Resource.updateResource();

@@ -7,5 +7,6 @@ src/**
 .gitignore
 tsconfig.json
 vsc-extension-quickstart.md
-resources/element-gh-pages
+resources/element-gh-pages/**
 resources/element/versions.json
+resources/app.log

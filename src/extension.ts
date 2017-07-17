@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable = vscode.commands.registerCommand('element-helper.searchUnderCursor', () => {
         if (context.workspaceState.get('element-helper.loading', false)) {
-            vscode.window.showInformationMessage('Document is initializing, please wait a minute.');
+            vscode.window.showInformationMessage('Document is initializing, please wait a minute depend on your network.');
             return;
         }
         
