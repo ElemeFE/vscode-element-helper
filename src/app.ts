@@ -1,23 +1,9 @@
 import {
-    window,
-    commands,
-    ViewColumn,
-    Disposable,
-    Event,
-    Uri,
-    CancellationToken,
-    TextDocumentContentProvider,
-    EventEmitter,
-    workspace,
-    CompletionItemProvider,
-    ProviderResult,
-    TextDocument,
-    Position,
-    CompletionItem,
-    CompletionList,
-    CompletionItemKind,
-    SnippetString,
-    Range
+    window, commands, ViewColumn, Disposable,
+    Event, Uri, CancellationToken, TextDocumentContentProvider,
+    EventEmitter, workspace, CompletionItemProvider, ProviderResult,
+    TextDocument, Position, CompletionItem, CompletionList, CompletionItemKind,
+    SnippetString, Range
 } from 'vscode';
 import Resource from './resource';
 import * as TAGS from 'element-helper-json/element-tags.json';
@@ -361,8 +347,6 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     let tag: TagObject | string | undefined = this.getPreTag();
     let attr = this.getPreAttr();
 
-    // console.log('tag: ', JSON.stringify(tag), 'attr:', attr);
-    
     if (this.isAttrValueStart(tag, attr)) {
       return this.getAttrValueSuggestion(tag.text, attr);
     } else if(this.isAttrStart(tag)) {
@@ -377,12 +361,4 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
       }
     } else { return []; }
   }
-  // resolveCompletionItem(item: CompletionItem, token: CancellationToken): ProviderResult<CompletionItem> {
-  //   console.log('item', item);
-  //   console.log(this._pos);
-  //   console.log(this._doc.getWordRangeAtPosition(this._pos));
-  //   return {
-  //     label: 'ddddd'
-  //   };
-  // }
 }
