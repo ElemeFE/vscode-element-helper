@@ -81,13 +81,23 @@ export class App {
 }
 
 const HTML_CONTENT = (query: Query) => {
+  const filename = Path.join(__dirname, '..', '..', 'package.json');
+  const data = fs.readFileSync(filename, 'utf8');
+  const content = JSON.parse(data);
+  const lastVersion = content.contributes.configuration.properties['element-helper.version']['enum'].pop();
+
   const config = workspace.getConfiguration('element-helper');
   const language = <string>config.get('language');
   const version = config.get('version');
+  let versionText = `${version}/`;
+  if (version === lastVersion) {
+    versionText = '';
+  }
+
   const path = query.keyword;
   const style = fs.readFileSync(Path.join(Resource.RESOURCE_PATH, 'style.css'), 'utf-8');
   
-  const componentPath = `${version}/main.html#/${language}/component/${path}`;
+  const componentPath = `${versionText}main.html#/${language}/component/${path}`;
   const href = Resource.ELEMENT_HOME_URL + componentPath.replace('main.html', 'index.html');
   const iframeSrc = Path.join(Resource.ELEMENT_PATH, componentPath);
 
