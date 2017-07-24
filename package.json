@@ -1,7 +1,7 @@
 {
   "name": "vscode-element-helper",
   "displayName": "vscode-element-helper",
-  "description": "a vscode extension for Element-UI",
+  "description": "A vscode extension for Element-UI",
   "version": "0.2.1",
   "publisher": "ElemeFE",
   "repository": {

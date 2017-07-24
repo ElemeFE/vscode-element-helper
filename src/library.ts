@@ -95,7 +95,7 @@ class Library {
             this.context.workspaceState.update('element-helper.loading', false);
             if (err) {
               window.showInformationMessage('Load document failure, please check your network and reload.');
-
+              fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
               return;
             }
             Resource.updateResource();
