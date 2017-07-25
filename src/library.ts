@@ -2,9 +2,10 @@
 
 const fs  = require('fs');
 const Path = require('path');
+const os = require('os');
 import DocSet from './docset';
 import Resource from './resource';
-import { exec } from 'child_process';
+import { exec, mkdir, cd, which, exit, rm} from 'shelljs';
 import { window, workspace, ExtensionContext } from 'vscode';
 
 class Library {
@@ -66,8 +67,18 @@ class Library {
       fs.writeFileSync(filename, JSON.stringify(content, null, 2));
     });
   }
+  
+  runShell(first) {
+    if (!which('git')) {
+      window.showInformationMessage('Please specify your git.path setting to your git address, or update your git version to 2+, and then specify git.path setting');
+      exit(1);
+    }
 
+
+
+  }
   fetchVersion(repo) {
+    
     const path = `${repo.type}/versions.json`;
     Resource.get(path).then((local: string) => {
       Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, path))
@@ -76,9 +87,11 @@ class Library {
           const newVersions = this.getValues(JSON.parse(online));
           if (newVersions.length > oldVersions.length) {
             this.context.workspaceState.update('element-helper.loading', true);
-            exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh 2>&1 | tee ./app.log`, (err, stdout) => {
+            const cmd = `cd ${Resource.RESOURCE_PATH}/element-gh-pages && git branch -D temp && git checkout -b temp 
+              && git branch -D gh-pages && git fetch origin gh-pages && git checkout --track origin/gh-pages`;
+            exec(cmd, (code, stdout, stderr) => {
               this.context.workspaceState.update('element-helper.loading', false);
-              if (err) return;
+              if (code) return;
               this.setVersionSchema(newVersions);
               Resource.updateResource();
               window.showInformationMessage(`${repo.name} version updated to ${newVersions[newVersions.length - 1]}`);
@@ -91,9 +104,14 @@ class Library {
           const versions = this.getValues(JSON.parse(online));
           this.setVersionSchema(versions);
           this.context.workspaceState.update('element-helper.loading', true);
-          exec(`cd ${Resource.RESOURCE_PATH} && sh ./update.sh first 2>&1 | tee ./app.log`, (err, stdout) => {
+          cd(`${Resource.RESOURCE_PATH}`);
+          rm('-rf', './element-gh-pages');
+          mkdir('-p', './element-gh-pages');
+          const cmd = 'cd element-gh-pages && git init && git remote add -t gh-pages -f origin git@github.com:ElemeFE/element.git && git checkout gh-pages';
+          exec(cmd, (code, stdout, stderr) => {
             this.context.workspaceState.update('element-helper.loading', false);
-            if (err) {
+            console.log(stderr);
+            if (code) {
               window.showInformationMessage('Load document failure, please check your network and reload.');
               fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
               return;
