@@ -99,7 +99,7 @@ const HTML_CONTENT = (query: Query) => {
   
   const componentPath = `${versionText}main.html#/${language}/component/${path}`;
   const href = Resource.ELEMENT_HOME_URL + componentPath.replace('main.html', 'index.html');
-  const iframeSrc = Path.join(Resource.ELEMENT_PATH, componentPath);
+  const iframeSrc = 'file://' + Path.join(Resource.ELEMENT_PATH, componentPath).split(Path.sep).join('/');
 
   const notice = ({
     'zh-CN': `版本：${version}，在线示例请在浏览器中<a href="${href}">查看</a>`,
@@ -118,7 +118,7 @@ const HTML_CONTENT = (query: Query) => {
       </div>
     </div>
     <div class="docs-notice">${notice}</div>
-    <iframe id="doc-frame" src="file://${iframeSrc}"></iframe>
+    <iframe id="doc-frame" src="${iframeSrc}"></iframe>
     <script>
       window.addEventListener('message', (e) => {
         e.data.loaded && (document.querySelector('.element-helper-loading-mask').style.display = 'none');

@@ -68,17 +68,12 @@ class Library {
     });
   }
   
-  runShell(first) {
+  fetchVersion(repo) {
     if (!which('git')) {
       window.showInformationMessage('Please specify your git.path setting to your git address, or update your git version to 2+, and then specify git.path setting');
       exit(1);
+      return;
     }
-
-
-
-  }
-  fetchVersion(repo) {
-    
     const path = `${repo.type}/versions.json`;
     Resource.get(path).then((local: string) => {
       Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, path))
@@ -86,11 +81,9 @@ class Library {
           const oldVersions = this.getValues(JSON.parse(local));
           const newVersions = this.getValues(JSON.parse(online));
           if (newVersions.length > oldVersions.length) {
-            this.context.workspaceState.update('element-helper.loading', true);
-            const cmd = `cd ${Resource.RESOURCE_PATH}/element-gh-pages && git branch -D temp && git checkout -b temp 
-              && git branch -D gh-pages && git fetch origin gh-pages && git checkout --track origin/gh-pages`;
+            cd(`${Path.join(Resource.RESOURCE_PATH,'element-gh-pages')}`);
+            const cmd = 'git branch -D temp && git checkout -b temp && git branch -D gh-pages && git fetch origin gh-pages && git checkout --track origin/gh-pages';
             exec(cmd, (code, stdout, stderr) => {
-              this.context.workspaceState.update('element-helper.loading', false);
               if (code) return;
               this.setVersionSchema(newVersions);
               Resource.updateResource();
@@ -110,7 +103,6 @@ class Library {
           const cmd = 'cd element-gh-pages && git init && git remote add -t gh-pages -f origin git@github.com:ElemeFE/element.git && git checkout gh-pages';
           exec(cmd, (code, stdout, stderr) => {
             this.context.workspaceState.update('element-helper.loading', false);
-            console.log(stderr);
             if (code) {
               window.showInformationMessage('Load document failure, please check your network and reload.');
               fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
