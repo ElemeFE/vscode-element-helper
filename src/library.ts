@@ -84,7 +84,11 @@ class Library {
             cd(`${Path.join(Resource.RESOURCE_PATH,'element-gh-pages')}`);
             const cmd = 'git branch -D temp && git checkout -b temp && git branch -D gh-pages && git fetch origin gh-pages && git checkout --track origin/gh-pages';
             exec(cmd, (code, stdout, stderr) => {
-              if (code) return;
+              if (code > 1) {
+                fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
+                exit(1);
+                return;
+              }
               this.setVersionSchema(newVersions);
               Resource.updateResource();
               window.showInformationMessage(`${repo.name} version updated to ${newVersions[newVersions.length - 1]}`);
@@ -106,6 +110,7 @@ class Library {
             if (code) {
               window.showInformationMessage('Load document failure, please check your network and reload.');
               fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
+              exit(1);
               return;
             }
             Resource.updateResource();
