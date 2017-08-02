@@ -3,7 +3,7 @@
     "prefix": "msg",
     "body": [
       "this.\\$message({",
-      "  message: '${1:text}'",
+      "  message: '${1:text}',",
       "  type: '${2:info}'",
       "});"
     ],

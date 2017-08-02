@@ -70,7 +70,7 @@ class Library {
   
   fetchVersion(repo) {
     if (!which('git')) {
-      window.showInformationMessage('Please specify your git.path setting to your git.exe directory, or update your git version to 2+, and then specify git.path setting');
+      window.showInformationMessage('Please specify your git.path setting to your git path, or update your git version to 2+, and then specify git.path setting');
       exit(1);
       return;
     }

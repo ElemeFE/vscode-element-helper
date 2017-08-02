@@ -59,7 +59,7 @@ export class App {
     const config = workspace.getConfiguration('editor');
     const quickSuggestions = config.get('quickSuggestions');
     if(!quickSuggestions["strings"]) {
-      config.update("quickSuggestions", { "string": true }, true);
+      config.update("quickSuggestions", { "strings": true }, true);
     }
   }
 
