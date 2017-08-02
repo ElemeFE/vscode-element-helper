@@ -20,7 +20,7 @@ $(window).on('load', () => {
     container.find('.menu-button').text('<<');
   });
   container.on('click', '.side-nav .nav-item a', function () {
-    window.parent.postMessage({ title: this.textContent }, '*');
+    window.parent.postMessage({ title: this.textContent, hash: this.href.split('#').pop() }, '*');
     $('.description button').remove();
   });
   $(document.body).css('display', 'block');

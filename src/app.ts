@@ -122,6 +122,13 @@ const HTML_CONTENT = (query: Query) => {
     <script>
       window.addEventListener('message', (e) => {
         e.data.loaded && (document.querySelector('.element-helper-loading-mask').style.display = 'none');
+        if(e.data.hash) {
+          var link = document.querySelector('.docs-notice a');
+          var pathArr = link.href.split('#');
+          pathArr.pop();
+          pathArr.push(e.data.hash);
+          link.href = pathArr.join('#');
+        }
       }, false);
     </script>
     </body>`;
