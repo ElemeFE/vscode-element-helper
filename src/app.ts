@@ -153,8 +153,9 @@ export class ElementDocsContentProvider implements TextDocumentContentProvider {
 export class ElementCompletionItemProvider implements CompletionItemProvider {
   private _document: TextDocument;
   private _position: Position;
-  private tagReg: RegExp = /<([\w-]+)\s*/g;
+  private tagReg: RegExp = /<([\w-]+)\s+/g;
   private attrReg: RegExp = /\s*(\w+)\s*=\s*"[^"]*/;
+  private tagStartReg:  RegExp = /<([\w-]*)$/;
 
   getPreTag(): TagObject | undefined {
     let line = this._position.line;
@@ -335,9 +336,8 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   }
 
   isTagStart() {
-    let preChar = this._document.getText(new Range(this._position.translate(0, -1), this._position));
-
-    return preChar === '<';
+    let txt = this.getTextBeforePosition(this._position);
+    return this.tagStartReg.test(txt);
   }
 
   firstCharsEqual(str1: string, str2: string) {
@@ -363,7 +363,6 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     this._position = position;
     let tag: TagObject | string | undefined = this.getPreTag();
     let attr = this.getPreAttr();
-
     if (this.isAttrValueStart(tag, attr)) {
       return this.getAttrValueSuggestion(tag.text, attr);
     } else if(this.isAttrStart(tag)) {
@@ -376,6 +375,6 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
           // todo
           return this.getTagSuggestion();
       }
-    } else { return []; }
+    } else {return [];}
   }
 }
