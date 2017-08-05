@@ -16,12 +16,14 @@ class Library {
 
   catalog: any;
   repos: any;
+  cmd: string;
   context: ExtensionContext;
 
   constructor(context: ExtensionContext) {
     this.catalog = null;
     this.context = context;
     this.fetchRepo();
+    this.cmd = '';
     setInterval(() => { this.fetchAllVersion(this.repos); }, Library.REFRESH_PERIOD_MS_);
   }
 
@@ -71,7 +73,6 @@ class Library {
   fetchVersion(repo) {
     if (!which('git')) {
       window.showInformationMessage('Please specify your git.path setting to your git path, or update your git version to 2+, and then specify git.path setting');
-      exit(1);
       return;
     }
     const path = `${repo.type}/versions.json`;
@@ -100,23 +101,42 @@ class Library {
         .then((online: string) => {
           const versions = this.getValues(JSON.parse(online));
           this.setVersionSchema(versions);
-          this.context.workspaceState.update('element-helper.loading', true);
+          this.setLoading(true);
           cd(`${Resource.RESOURCE_PATH}`);
-          rm('-rf', './element-gh-pages');
-          mkdir('-p', './element-gh-pages');
-          const cmd = 'cd element-gh-pages && git init && git remote add -t gh-pages -f origin git@github.com:ElemeFE/element.git && git checkout gh-pages';
-          exec(cmd, (code, stdout, stderr) => {
-            this.context.workspaceState.update('element-helper.loading', false);
+          this.initGitRepo();
+          exec(this.cmd, (code, stdout, stderr) => {
             if (code) {
-              window.showInformationMessage('Load document failure, please check your network and reload.');
-              fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
-              exit(1);
-              return;
+              console.log(code);
+              this.initGitRepo('https');
+              console.log(this.cmd);
+              exec(this.cmd, (code, stdout, stderr) => {
+                this.setLoading(false);
+                if (code) {
+                  window.showInformationMessage('Load document failure, please config your git ssh-key or check your network and reload.');
+                  fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
+                  exit(1);
+                  return;
+                }
+                Resource.updateResource();
+              });
+            } else {
+              this.setLoading(false);
+              Resource.updateResource();
             }
-            Resource.updateResource();
           });
         });
     });
+  }
+
+  setLoading(value: boolean) {
+    this.context.workspaceState.update('element-helper.loading', value);
+  }
+
+  initGitRepo(type?: string) {
+    rm('-rf', './element-gh-pages');
+    mkdir('-p', './element-gh-pages');
+    const repo: string = type === 'https' ? 'https://github.com/ElemeFE/element.git' : 'git@github.com:ElemeFE/element.git';
+    this.cmd = `cd element-gh-pages && git init && git remote add -t gh-pages -f origin ${repo} && git checkout gh-pages`;
   }
 
   getValues(obj) {
