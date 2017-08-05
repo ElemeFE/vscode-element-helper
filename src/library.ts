@@ -106,9 +106,7 @@ class Library {
           this.initGitRepo();
           exec(this.cmd, (code, stdout, stderr) => {
             if (code) {
-              console.log(code);
               this.initGitRepo('https');
-              console.log(this.cmd);
               exec(this.cmd, (code, stdout, stderr) => {
                 this.setLoading(false);
                 if (code) {
