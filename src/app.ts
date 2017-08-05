@@ -84,15 +84,25 @@ const HTML_CONTENT = (query: Query) => {
   const filename = Path.join(__dirname, '..', '..', 'package.json');
   const data = fs.readFileSync(filename, 'utf8');
   const content = JSON.parse(data);
-  const lastVersion = content.contributes.configuration.properties['element-helper.version']['enum'].pop();
-
+  const versions = content.contributes.configuration.properties['element-helper.version']['enum'];
+  const lastVersion  = versions[versions.length - 1];
   const config = workspace.getConfiguration('element-helper');
   const language = <string>config.get('language');
   const version = config.get('version');
+
   let versionText = `${version}/`;
   if (version === lastVersion) {
     versionText = '';
   }
+
+  let opts = ['<select class="docs-version">'];
+  let selected = '';
+  versions.forEach(item => {
+    selected = item === version ? 'selected="selected"' : '';
+    opts.push(`<option ${selected} value ="${item}">${item}</option>`);
+  });
+  opts.push('</select>');
+  const html = opts.join('');
 
   const path = query.keyword;
   const style = fs.readFileSync(Path.join(Resource.RESOURCE_PATH, 'style.css'), 'utf-8');
@@ -101,9 +111,10 @@ const HTML_CONTENT = (query: Query) => {
   const href = Resource.ELEMENT_HOME_URL + componentPath.replace('main.html', 'index.html');
   const iframeSrc = 'file://' + Path.join(Resource.ELEMENT_PATH, componentPath).split(Path.sep).join('/');
 
+
   const notice = ({
-    'zh-CN': `版本：${version}，在线示例请在浏览器中<a href="${href}">查看</a>`,
-    'en-US': `Version: ${version}, view online examples in <a href="${href}">browser</a>`
+    'zh-CN': `版本：${html}，在线示例请在浏览器中<a href="${href}">查看</a>`,
+    'en-US': `Version: ${html}, view online examples in <a href="${href}">browser</a>`
   })[language];
 
   return `
@@ -118,16 +129,34 @@ const HTML_CONTENT = (query: Query) => {
       </div>
     </div>
     <div class="docs-notice">${notice}</div>
-    <iframe id="doc-frame" src="${iframeSrc}"></iframe>
+    <iframe id="docs-frame" src="${iframeSrc}"></iframe>
     <script>
+      var defaultVersion = '${version}';
+      var iframe = document.querySelector('#docs-frame');
+      var link = document.querySelector('.docs-notice a');
       window.addEventListener('message', (e) => {
         e.data.loaded && (document.querySelector('.element-helper-loading-mask').style.display = 'none');
         if(e.data.hash) {
-          var link = document.querySelector('.docs-notice a');
           var pathArr = link.href.split('#');
           pathArr.pop();
           pathArr.push(e.data.hash);
           link.href = pathArr.join('#');
+          var srcArr = iframe.src.split('#');
+          srcArr.pop();
+          srcArr.push(e.data.hash);
+          iframe.src = srcArr.join('#');
+        }
+      }, false);
+      document.querySelector('.docs-version').addEventListener('change', function() {
+        var version = this.options[this.selectedIndex].value;
+        var originalSrc = iframe.src;
+        var arr = originalSrc.split(new RegExp('/?[0-9.]*/main.html'));
+        if(defaultVersion === version) {
+          iframe.src = arr.join('/main.html');
+          link.href = link.href.replace(new RegExp('/?[0-9.]*/index.html'), '/index.html');
+        } else {
+          iframe.src = arr.join('/' + version + '/main.html');
+          link.href = link.href.replace(new RegExp('/?[0-9.]*/index.html'), '/' + version + '/index.html');
         }
       }, false);
     </script>
