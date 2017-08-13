@@ -5,11 +5,17 @@ const Path = require('path');
 const os = require('os');
 import DocSet from './docset';
 import Resource from './resource';
-import { exec, mkdir, cd, which, exit, rm} from 'shelljs';
+import { exec } from 'child_process';
 import { window, workspace, ExtensionContext } from 'vscode';
 
+interface RepoObject {
+  name: string;
+  type: string;
+  links: object;
+}
+
 class Library {
-  static REFRESH_PERIOD_MS_ = 6 * 60 * 60 * 1000;
+  static REFRESH_PERIOD_MS_ = 2 * 60 * 60 * 1000;
   static DEFAULT_DOCSETS = new Set([
     'element'
   ]);
@@ -41,7 +47,7 @@ class Library {
   }
 
   fetchRepo() {
-    return Resource.get(Resource.RESOURCE_REPO)
+    return Resource.get(Path.join(Resource.RESOURCE_PATH, Resource.RESOURCE_REPO))
       .then((result: string) => {
         this.repos = JSON.parse(result)
         this.buildCatalog(this.repos);
@@ -51,7 +57,7 @@ class Library {
       });
   }
 
-  fetchAllVersion(repos) {
+  fetchAllVersion(repos: RepoObject[]) {
     for (let i = 0; i < repos.length; ++i) {
       let repo = repos[i];
       this.fetchVersion(repo);
@@ -70,71 +76,45 @@ class Library {
     });
   }
   
-  fetchVersion(repo) {
-    if (!which('git')) {
-      window.showInformationMessage('Please specify your git.path setting to your git path, or update your git version to 2+, and then specify git.path setting');
-      return;
-    }
-    const path = `${repo.type}/versions.json`;
-    Resource.get(path).then((local: string) => {
-      Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, path))
+  fetchVersion(repo: RepoObject) {
+    Resource.get(Path.join(Resource.ELEMENT_PATH, 'versions.json')).then((local: string) => {
+      Resource.getFromUrl(Resource.ELEMENT_VERSION_URL)
         .then((online: string) => {
           const oldVersions = this.getValues(JSON.parse(local));
           const newVersions = this.getValues(JSON.parse(online));
-          if (newVersions.length > oldVersions.length) {
-            cd(`${Path.join(Resource.RESOURCE_PATH,'element-gh-pages')}`);
-            const cmd = 'git branch -D temp && git checkout -b temp && git branch -D gh-pages && git fetch origin gh-pages && git checkout --track origin/gh-pages';
-            exec(cmd, (code, stdout, stderr) => {
-              if (code > 1) {
-                fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
-                exit(1);
+          if (!this.isSame(JSON.parse(local), JSON.parse(online))) {
+            exec('npm update element-gh-pages --save-dev', (error, stdout, stderr) => {
+              console.log('error:', error);
+              if (error) {
                 return;
               }
-              this.setVersionSchema(newVersions);
-              Resource.updateResource();
-              window.showInformationMessage(`${repo.name} version updated to ${newVersions[newVersions.length - 1]}`);
-            });
-          }
-        });
-    }).catch(error => {
-      Resource.getFromUrl(Resource.ELEMENT_VERSION_URL, Path.join(Resource.RESOURCE_PATH, path))
-        .then((online: string) => {
-          const versions = this.getValues(JSON.parse(online));
-          this.setVersionSchema(versions);
-          this.setLoading(true);
-          cd(`${Resource.RESOURCE_PATH}`);
-          this.initGitRepo();
-          exec(this.cmd, (code, stdout, stderr) => {
-            if (code) {
-              this.initGitRepo('https');
-              exec(this.cmd, (code, stdout, stderr) => {
-                this.setLoading(false);
-                if (code) {
-                  window.showInformationMessage('Load document failure, please config your git ssh-key or check your network and reload.');
-                  fs.unlinkSync(Path.join(Resource.RESOURCE_PATH, path));
-                  exit(1);
-                  return;
-                }
+              const versionsStr = fs.readFileSync(Path.join(Resource.ELEMENT_PATH, 'versions.json'), 'utf8');
+              if (!this.isSame(JSON.parse(local), JSON.parse(versionsStr))) {
+                this.setVersionSchema(newVersions);
                 Resource.updateResource();
-              });
-            } else {
-              this.setLoading(false);
+                window.showInformationMessage(`${repo.name} version updated to ${newVersions[newVersions.length - 1]}`);
+              }
+            });
+          } else {
+            if (!fs.existsSync(Path.join(Resource.ELEMENT_PATH, 'main.html'))) {
               Resource.updateResource();
             }
-          });
+          }
         });
     });
   }
 
-  setLoading(value: boolean) {
-    this.context.workspaceState.update('element-helper.loading', value);
+  isSame(local: JSON, online: JSON) {
+    for (let key in online) {
+      if (!local[key]) {
+        return false;
+      }
+    }
+    return true;
   }
 
-  initGitRepo(type?: string) {
-    rm('-rf', './element-gh-pages');
-    mkdir('-p', './element-gh-pages');
-    const repo: string = type === 'https' ? 'https://github.com/ElemeFE/element.git' : 'git@github.com:ElemeFE/element.git';
-    this.cmd = `cd element-gh-pages && git init && git remote add -t gh-pages -f origin ${repo} && git checkout gh-pages`;
+  setLoading(value: boolean) {
+    this.context.workspaceState.update('element-helper.loading', value);
   }
 
   getValues(obj) {

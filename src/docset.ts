@@ -14,12 +14,12 @@ class DocSet {
     this.id_ = item.type;
     this.indexPath = this.id_ + '/index.json';
     this.index_ = null;
-    this.language_ = 'zh-CH'; // atom.config.get('element-helper.language');
+    this.language_ = workspace.getConfiguration('element-helper').get('language');
     this.getMemu();
   }
 
   getMemu() {
-    Resource.get(this.indexPath)
+    Resource.get(Path.join(Resource.RESOURCE_PATH, this.indexPath))
     .then((result: string) => {
       this.index_ = JSON.parse(result);
 

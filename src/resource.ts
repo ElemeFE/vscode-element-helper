@@ -8,18 +8,17 @@ const cheerio = require("cheerio");
 
 export default class Resource {
   // resources local path
-  static RESOURCE_PATH = Path.join(__dirname, '..', '..', 'resources');
-  static ELEMENT_PATH = Path.join(__dirname, '..', '..', 'resources', 'element-gh-pages');
-  static URL_REG = /((?:src|href)\s*=\s*)(['"])(\/\/[^'"]*)\2/g;
-  static ELEMENT_VERSION_URL = 'http://element.eleme.io/versions.json';
-  static ELEMENT_HOME_URL = 'http://element.eleme.io/';
-  static RESOURCE_REPO = 'repos.json';
+  static RESOURCE_PATH: string = Path.join(__dirname, '..', '..', 'resources');
+  static ELEMENT_PATH: string = Path.join(__dirname, '..', '..', 'node_modules', 'element-gh-pages');
+  static URL_REG: RegExp = /((?:src|href)\s*=\s*)(['"])(\/\/[^'"]*)\2/g;
+  static ELEMENT_VERSION_URL: string = 'http://element.eleme.io/versions.json';
+  static ELEMENT_HOME_URL: string = 'http://element.eleme.io/';
+  static RESOURCE_REPO: string = 'repos.json';
 
-  static get(resourceName) {
-    const filename = Path.join(Resource.RESOURCE_PATH, resourceName);
+  static get(filePath: string) {
 
     return new Promise((resolve, reject) => {
-      fs.readFile(filename, 'utf8', (err, data) => {
+      fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) reject('ReadFail');
 
         resolve(data);
@@ -27,7 +26,7 @@ export default class Resource {
     });
   }
 
-  static getFromUrl(url, filename) {
+  static getFromUrl(url: string, filename?: string) {
     return new Promise((resolve, reject) => {
       Http.get(url, response => {
         response.on('error', reject);
@@ -36,20 +35,22 @@ export default class Resource {
         response.on('end', () => { resolve(buffer); });
       }).on('error', reject);
     }).then(result => {
-      Mkdirp(Path.dirname(filename));
-      fs.writeFileSync(filename, result);
+      if (filename) {
+        Mkdirp(Path.dirname(filename));
+        fs.writeFileSync(filename, result);
+      }
       return result;
     }).catch(error => console.log(error));
   }
 
-  static fixResource(file) {
-    const htmlPath = Path.join('element-gh-pages', file);
+  static fixResource(file: string): void {
+    const htmlPath = Path.join(Resource.ELEMENT_PATH, file);
     Resource.get(htmlPath)
       .then((content:string) => {
         const matched = [];
         content = content.replace(Resource.URL_REG, (match, one, two, three)=> {
           const name = Path.basename(three);
-          Resource.getFromUrl(`http:${three}`, Path.join(Resource.RESOURCE_PATH, Path.dirname(htmlPath), name));
+          Resource.getFromUrl(`http:${three}`, Path.join(Path.dirname(htmlPath), name));
           return `${one}${two}${name}${two}`;
         });
 
