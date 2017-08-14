@@ -40,7 +40,7 @@ export default class Resource {
         fs.writeFileSync(filename, result);
       }
       return result;
-    }).catch(error => console.log(error));
+    }).catch(error => Promise.reject(error));
   }
 
   static fixResource(file: string): void {
