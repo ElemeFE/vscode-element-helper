@@ -5,7 +5,7 @@ const Path = require('path');
 const os = require('os');
 import DocSet from './docset';
 import Resource from './resource';
-import { exec } from 'child_process';
+import { cd, exec } from 'shelljs';
 import { window, workspace, ExtensionContext } from 'vscode';
 
 interface RepoObject {
@@ -83,8 +83,8 @@ class Library {
           const oldVersions = this.getValues(JSON.parse(local));
           const newVersions = this.getValues(JSON.parse(online));
           if (!this.isSame(JSON.parse(local), JSON.parse(online))) {
+            cd(`${Resource.RESOURCE_PATH}/..`);
             exec('npm update element-gh-pages --save-dev', (error, stdout, stderr) => {
-              console.log('error:', error);
               if (error) {
                 return;
               }
@@ -92,7 +92,7 @@ class Library {
               if (!this.isSame(JSON.parse(local), JSON.parse(versionsStr))) {
                 this.setVersionSchema(newVersions);
                 Resource.updateResource();
-                window.showInformationMessage(`${repo.name} version updated to ${newVersions[newVersions.length - 1]}`);
+                window.showInformationMessage(`${repo.name} version updated to lasted version`);
               }
             });
           } else {

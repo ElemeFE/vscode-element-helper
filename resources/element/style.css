@@ -30,12 +30,12 @@
   width: 15px;
   height: 30px;
   line-height: 30px;
-  background: #eef1f6;
+  background: #20a0ff;
   position: fixed;
   top: 50%;
   font-size: 12px;
   z-index: 10;
-  color: #5e6d82;
+  color: white;
   border-radius: 0 5px 5px 0;
 }
 /* Shown menu */
@@ -46,4 +46,9 @@
 .show-menu .page-container-right {
   transform: translate(245px);
 	transition: transform 0.4s cubic-bezier(0.7,0,0.3,1);
+}
+.show-menu .menu-button {
+  background-color: #eef1f6;
+  color: #666;
+  transition: 0.5s;
 }

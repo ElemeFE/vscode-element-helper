@@ -15,8 +15,6 @@ const fs = require('fs');
 
 export const SCHEME = 'element-helper';
 
-const WORD_REG = /(-?\d*\.\d\w*)|([^\`\~\!\@\$\^\&\*\(\)\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\s]+)/gi;
-
 export interface Query {
     keyword: string
 };
@@ -36,6 +34,8 @@ export function decodeDocsUri(uri: Uri): Query {
 
 export class App {
   private _disposable: Disposable;
+  public WORD_REG: RegExp = /(-?\d*\.\d\w*)|([^\`\~\!\@\$\^\&\*\(\)\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\s]+)/gi;
+
 
   getSeletedText() {
     let editor = window.activeTextEditor;
@@ -46,7 +46,7 @@ export class App {
 
     if (selection.isEmpty) {
       let text = [];
-      let range = editor.document.getWordRangeAtPosition(selection.start, WORD_REG);
+      let range = editor.document.getWordRangeAtPosition(selection.start, this.WORD_REG);
 
       return editor.document.getText(range);
     } else {

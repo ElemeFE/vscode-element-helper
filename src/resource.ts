@@ -1,9 +1,9 @@
 'use strict';
 
 import { http as Http } from "follow-redirects";
+import { mkdir } from 'shelljs';
 const fs  = require('fs');
 const Path = require('path');
-const Mkdirp = require('mkdirp');
 const cheerio = require("cheerio");
 
 export default class Resource {
@@ -36,7 +36,7 @@ export default class Resource {
       }).on('error', reject);
     }).then(result => {
       if (filename) {
-        Mkdirp(Path.dirname(filename));
+        mkdir('-p', Path.dirname(filename));
         fs.writeFileSync(filename, result);
       }
       return result;

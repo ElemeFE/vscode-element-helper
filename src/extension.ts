@@ -13,7 +13,8 @@ export function activate(context: vscode.ExtensionContext) {
     let registration = vscode.workspace.registerTextDocumentContentProvider(SCHEME, docs);
 
     let completion = vscode.languages.registerCompletionItemProvider(['vue', 'html'], completionItemProvider, '', ' ', ':', '<', '"', '/', '@');
-
+    let languageConfig = vscode.languages.setLanguageConfiguration('vue', {wordPattern: app.WORD_REG});
+    
     let disposable = vscode.commands.registerCommand('element-helper.searchUnderCursor', () => {
         if (context.workspaceState.get('element-helper.loading', false)) {
             vscode.window.showInformationMessage('Document is initializing, please wait a minute depend on your network.');
@@ -56,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
         })
     });
 
-    context.subscriptions.push(app, disposable, registration, completion);
+    context.subscriptions.push(app, disposable, registration, completion, languageConfig);
 }
 
 // this method is called when your extension is deactivated
