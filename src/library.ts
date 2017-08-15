@@ -84,7 +84,7 @@ class Library {
           const newVersions = this.getValues(JSON.parse(online));
           if (!this.isSame(JSON.parse(local), JSON.parse(online))) {
             cd(`${Resource.RESOURCE_PATH}/..`);
-            exec('npm update element-gh-pages --save-dev', (error, stdout, stderr) => {
+            exec('npm update element-gh-pages --save', (error, stdout, stderr) => {
               if (error) {
                 return;
               }
