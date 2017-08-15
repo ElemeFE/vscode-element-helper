@@ -79,7 +79,7 @@
   "devDependencies": {
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
-    "element-gh-pages": "^1.0.1",
+    "element-gh-pages": "^1.0.3",
     "mocha": "^2.3.3",
     "shelljs": "^0.7.8",
     "typescript": "^2.0.3",
@@ -88,7 +88,6 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
     "element-helper-json": "^1.0.0",
-    "follow-redirects": "^1.2.3",
     "jquery": "^3.2.1",
     "pretty": "^2.0.0"
   }
