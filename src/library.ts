@@ -68,7 +68,10 @@ class Library {
     const config = workspace.getConfiguration('element-helper');
     const filename = Path.join(__dirname, '..', '..', 'package.json');
     fs.readFile(filename, 'utf8', (err, data) => {
-      if (err) console.error('ReadFail');
+      if (err) {
+        console.error('ReadFail');
+        return;
+      };
       const content = JSON.parse(data);
       content.contributes.configuration.properties['element-helper.version']['enum'] = versions;
       config.update('version', versions[versions.length - 1], true);
@@ -91,9 +94,9 @@ class Library {
               const versionsStr = fs.readFileSync(Path.join(Resource.ELEMENT_PATH, 'versions.json'), 'utf8');
               if (!this.isSame(JSON.parse(local), JSON.parse(versionsStr))) {
                 this.setVersionSchema(newVersions);
-                Resource.updateResource();
                 window.showInformationMessage(`${repo.name} version updated to lasted version`);
               }
+              Resource.updateResource();
             });
           } else {
             if (!fs.existsSync(Path.join(Resource.ELEMENT_PATH, 'main.html'))) {

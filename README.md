@@ -45,7 +45,7 @@ Document is off-line and auto synchronize with Element-UI official site.
 
 ### Keymap
 
-Default hot key is  `ctrl + cmd + z`. If it has conflicts with other software's hot key. You can customize it. see [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor)
+Default hot key is  `ctrl + cmd + z`( windows: `ctrl + win + z`). If it has conflicts with other software's hot key. You can customize it. see [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor)
 
 
 ## Autocomplete
