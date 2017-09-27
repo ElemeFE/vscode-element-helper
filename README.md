@@ -10,6 +10,8 @@ Element-UI is a great library. More and more projects use it. So, For helping de
 
 * Autocomplete
 
+	support vue, html and jade/pug language
+
 * Snippets
 
 
@@ -29,14 +31,15 @@ Element-UI is a great library. More and more projects use it. So, For helping de
 
 ![document](https://user-images.githubusercontent.com/1659577/27990775-4b7db888-6494-11e7-9b27-3ec7fa5f99b7.gif)
 
-### Version and Language Switching
+### Version， Indentation size and Language Switching
 
 1 - Enter `Preferences` -> `setting` or shortcut `cmd` + `,`
 
-2 - Modify language or version what do you want 
+2 - Modify language, version or indentation size what do you want 
 ```javascript
   "element-helper.language": "zh-CN",
-  "element-helper.version": "1.3"
+  "element-helper.version": "1.3",
+  "element-helper.indent-size: 2
 ```
 
 ### Auto Update Mechanism

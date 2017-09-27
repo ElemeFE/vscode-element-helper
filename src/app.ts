@@ -182,15 +182,17 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   private _document: TextDocument;
   private _position: Position;
   private tagReg: RegExp = /<([\w-]+)\s+/g;
-  private attrReg: RegExp = /\s*(\w+)\s*=\s*"[^"]*/;
+  private attrReg: RegExp = /(?:\(|\s*)(\w+)=['"][^'"]*/;
   private tagStartReg:  RegExp = /<([\w-]*)$/;
+  private pugTagStartReg: RegExp = /^\s*[\w-]*$/;
+  private size: number = workspace.getConfiguration('element-helper').get('indent-size');
 
   getPreTag(): TagObject | undefined {
     let line = this._position.line;
     let tag: TagObject | string;
     let txt = this.getTextBeforePosition(this._position);
   
-    while (this._position.line - line < 10 && line) {
+    while (this._position.line - line < 10 && line >= 0) {
       if (line !== this._position.line) {
         txt = this._document.lineAt(line).text;
       }
@@ -264,7 +266,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     let suggestions = [];
     let tagAttrs = this.getTagAttrs(tag);
     let preText = this.getTextBeforePosition(this._position);
-    let prefix = preText.split(/\s+/).pop();
+    let prefix = preText.replace(/['"]([^'"]*)['"]$/, '').split(/\s|\(+/).pop();
     // method attribute
     const method = prefix[0] === '@';
     // bind attribute
@@ -298,8 +300,8 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     let index = 0;
     function build(tag, {subtags, defaults}, snippets) {
       let attrs = '';
-      defaults && defaults.forEach((item,i) => {
-        attrs +=` ${item}="$${index + i + 1}"`;
+      defaults && defaults.forEach((item, i) => {
+        attrs += ` ${item}="$${index + i + 1}"`;
       });
       snippets.push(`${index > 0 ? '<':''}${tag}${attrs}>`);
       index++;
@@ -310,7 +312,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
 
     return {
       label: tag,
-      insertText: new SnippetString(prettyHTML('<' + snippets.join('')).substr(1)),
+      insertText: new SnippetString(prettyHTML('<' + snippets.join(''), {indent_size: this.size}).substr(1)),
       kind: CompletionItemKind.Snippet,
       detail: 'element-ui',
       documentation: tagVal.description
@@ -355,7 +357,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     return ATTRS[`${tag}/${attr}`] || ATTRS[attr];
   }
 
-  isAttrValueStart(tag: Object | undefined, attr) {
+  isAttrValueStart(tag: Object | string | undefined, attr) {
     return tag && attr;
   }
 
@@ -365,7 +367,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
 
   isTagStart() {
     let txt = this.getTextBeforePosition(this._position);
-    return this.tagStartReg.test(txt);
+    return this.isPug() ? this.pugTagStartReg.test(txt) : this.tagStartReg.test(txt);
   }
 
   firstCharsEqual(str1: string, str2: string) {
@@ -389,7 +391,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   provideCompletionItems(document: TextDocument, position: Position, token: CancellationToken): ProviderResult<CompletionItem[] | CompletionList> {
     this._document = document;
     this._position = position;
-    let tag: TagObject | string | undefined = this.getPreTag();
+    let tag: TagObject | string | undefined = this.isPug() ?  this.getPugTag() : this.getPreTag();
     let attr = this.getPreAttr();
     if (this.isAttrValueStart(tag, attr)) {
       return this.getAttrValueSuggestion(tag.text, attr);
@@ -397,12 +399,79 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
       return this.getAttrSuggestion(tag.text);
     } else if (this.isTagStart()) {
       switch(document.languageId) {
+        case 'jade':
+        case 'pug':
+          return this.getPugTagSuggestion();
         case 'vue':
+          if (this.isPug()) {
+            return this.getPugTagSuggestion();
+          }
           return this.notInTemplate() ? [] : this.getTagSuggestion();
         case 'html':
           // todo
           return this.getTagSuggestion();
       }
     } else {return [];}
+  }
+
+  isPug(): boolean {
+    if (['pug', 'jade'].includes(this._document.languageId)) {
+      return true;
+    } else {
+      var range = new Range(new Position(0, 0), this._position);
+      let txt = this._document.getText(range);
+      return /<template[^>]*\s+lang=['"](jade|pug)['"].*/.test(txt);
+    }
+  }
+
+  getPugTagSuggestion() {
+    let suggestions = [];
+    
+    for (let tag in TAGS) {
+      suggestions.push(this.buildPugTagSuggestion(tag, TAGS[tag]));
+    }
+    return suggestions;
+  }
+
+  buildPugTagSuggestion(tag, tagVal) {
+    const snippets = [];
+    let index = 0;
+    let that = this;
+    function build(tag, {subtags, defaults}, snippets) {
+      let attrs = [];
+      defaults && defaults.forEach((item, i) => {
+        attrs.push(`${item}='$${index + i + 1}'`);
+      });
+      snippets.push(`${' '.repeat(index * that.size)}${tag}(${attrs.join(' ')})`);
+      index++;
+      subtags && subtags.forEach(item => build(item, TAGS[item], snippets));
+    };
+    build(tag, tagVal, snippets);
+    return {
+      label: tag,
+      insertText: new SnippetString(snippets.join('\n')),
+      kind: CompletionItemKind.Snippet,
+      detail: 'element-ui',
+      documentation: tagVal.description
+    };
+  }
+
+  getPugTag(): TagObject | undefined {
+    let line = this._position.line;
+    let tag: TagObject | string;
+    let txt = '';
+  
+    while (this._position.line - line < 10 && line >=0) {
+      txt = this._document.lineAt(line).text;
+      let match = /^\s*([\w-]+)[.#-\w]*\(/.exec(txt);
+      if (match) {
+        return {
+          text: match[1],
+          offset: this._document.offsetAt(new Position(line, match.index))
+        };
+      }
+      line--;
+    }
+    return;
   }
 }

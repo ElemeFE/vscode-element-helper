@@ -3,8 +3,8 @@
     "prefix": "msg",
     "body": [
       "this.\\$message({",
-      "  message: '${1:text}',",
-      "  type: '${2:info}'",
+      "\tmessage: '${1:text}',",
+      "\ttype: '${2:info}'",
       "});"
     ],
     "description": "message"
@@ -13,10 +13,10 @@
     "prefix": "alert",
     "body": [
       "this.\\$alert('${1:content}', '${2:title}', {",
-      "  confirmButtonText: '${3:confirm}',",
-      "  callback: ${4:action} => {",
-      "    ",
-      "  }",
+      "\tconfirmButtonText: '${3:confirm}',",
+      "\tcallback: ${4:action} => {",
+      "\t\t",
+      "\t}",
       "});"
     ],
     "description": "alert"
@@ -25,11 +25,11 @@
     "prefix": "confirm",
     "body": [
       "this.\\$confirm('${1:content}', '${2:title}', {",
-      "  confirmButtonText: '${3:confirm}',",
-      "  cancelButtonText: '${4:cancel}',",
-      "  type: '${5:warning}'",
+      "\tconfirmButtonText: '${3:confirm}',",
+      "\tcancelButtonText: '${4:cancel}',",
+      "\ttype: '${5:warning}'",
       "}).then(() => {",
-      "  ",
+      "\t",
       "}).catch(() => {});"
     ],
     "description": "confirm"
@@ -38,12 +38,12 @@
     "prefix": "prompt",
     "body": [
       "this.\\$prompt('${1:content}', '${2:title}', {",
-      "  confirmButtonText: '${3:confirm}',",
-      "  cancelButtonText: '${4:cancel}',",
-      "  inputPattern: /${5:regExp}/,",
-      "  inputErrorMessage: '${6:errormsg}'",
+      "\tconfirmButtonText: '${3:confirm}',",
+      "\tcancelButtonText: '${4:cancel}',",
+      "\tinputPattern: /${5:regExp}/,",
+      "\tinputErrorMessage: '${6:errormsg}'",
       "}).then(({ value }) => {",
-      "  ",
+      "\t",
       "}).catch(() => {});"
     ],
     "description": "prompt"
@@ -52,14 +52,14 @@
     "prefix": "msgb",
     "body": [
       "this.\\$msgbox({",
-      "  title: '${1:title}',",
-      "  message: '${2:string|VNode}',",
-      "  showCancelButton: ${3:true},",
-      "  confirmButtonText: '${4:confirm}',",
-      "  cancelButtonText: '${5:cancel}',",
-      "  beforeClose: (action, instance, done) => {}",
+      "\ttitle: '${1:title}',",
+      "\tmessage: '${2:string|VNode}',",
+      "\tshowCancelButton: ${3:true},",
+      "\tconfirmButtonText: '${4:confirm}',",
+      "\tcancelButtonText: '${5:cancel}',",
+      "\tbeforeClose: (action, instance, done) => {}",
       "}).then(action => {",
-      "  ",
+      "\t",
       "});"
     ],
     "description": "msgbox"
@@ -68,8 +68,8 @@
     "prefix": "notify",
     "body": [
       "this.\\$notify({",
-      "  title: '${1:title}',",
-      "  message: '${2:string|VNode}'",
+      "\ttitle: '${1:title}',",
+      "\tmessage: '${2:string|VNode}'",
       "});"
     ],
     "description": "notify"

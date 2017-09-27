@@ -12,8 +12,10 @@ export function activate(context: vscode.ExtensionContext) {
     let completionItemProvider = new ElementCompletionItemProvider();
     let registration = vscode.workspace.registerTextDocumentContentProvider(SCHEME, docs);
 
-    let completion = vscode.languages.registerCompletionItemProvider(['vue', 'html'], completionItemProvider, '', ' ', ':', '<', '"', '/', '@');
-    let languageConfig = vscode.languages.setLanguageConfiguration('vue', {wordPattern: app.WORD_REG});
+    let completion = vscode.languages.registerCompletionItemProvider(['pug', 'jade', 'vue', 'html'], completionItemProvider, '', ' ', ':', '<', '"', "'", '/', '@', '(');
+    let vueLanguageConfig = vscode.languages.setLanguageConfiguration('vue', {wordPattern: app.WORD_REG});
+    let pugLanguageConfig = vscode.languages.setLanguageConfiguration('pug', {wordPattern: app.WORD_REG});
+    let jadeLanguageConfig = vscode.languages.setLanguageConfiguration('jade', {wordPattern: app.WORD_REG});
     
     let disposable = vscode.commands.registerCommand('element-helper.searchUnderCursor', () => {
         if (context.workspaceState.get('element-helper.loading', false)) {
@@ -22,6 +24,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
         
         switch(vscode.window.activeTextEditor.document.languageId) {
+            case 'pug':
+            case 'jade':
             case 'vue':
             case 'html':
                 break;
@@ -57,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
         })
     });
 
-    context.subscriptions.push(app, disposable, registration, completion, languageConfig);
+    context.subscriptions.push(app, disposable, registration, completion, vueLanguageConfig, pugLanguageConfig, jadeLanguageConfig);
 }
 
 // this method is called when your extension is deactivated
