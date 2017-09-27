@@ -185,7 +185,8 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   private attrReg: RegExp = /(?:\(|\s*)(\w+)=['"][^'"]*/;
   private tagStartReg:  RegExp = /<([\w-]*)$/;
   private pugTagStartReg: RegExp = /^\s*[\w-]*$/;
-  private size: number = workspace.getConfiguration('element-helper').get('indent-size');
+  private size: number;
+  private quotes: string;
 
   getPreTag(): TagObject | undefined {
     let line = this._position.line;
@@ -298,10 +299,11 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   buildTagSuggestion(tag, tagVal) {
     const snippets = [];
     let index = 0;
+    let that = this;
     function build(tag, {subtags, defaults}, snippets) {
       let attrs = '';
       defaults && defaults.forEach((item, i) => {
-        attrs += ` ${item}="$${index + i + 1}"`;
+        attrs += ` ${item}=${that.quotes}$${index + i + 1}${that.quotes}`;
       });
       snippets.push(`${index > 0 ? '<':''}${tag}${attrs}>`);
       index++;
@@ -323,7 +325,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     if ((method && type === "method") || (bind && type !== "method") || (!method && !bind)) {
       return {
         label: attr,
-        insertText: (type && (type === 'flag')) ? `${attr} ` : new SnippetString(`${attr}=\"$1\"$0`),
+        insertText: (type && (type === 'flag')) ? `${attr} ` : new SnippetString(`${attr}=${this.quotes}$1${this.quotes}$0`),
         kind: (type && (type === 'method')) ? CompletionItemKind.Method : CompletionItemKind.Property,
         detail:  tag ?  `<${tag}>` : 'element-ui',
         documentation: description
@@ -391,6 +393,13 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   provideCompletionItems(document: TextDocument, position: Position, token: CancellationToken): ProviderResult<CompletionItem[] | CompletionList> {
     this._document = document;
     this._position = position;
+
+    const config = workspace.getConfiguration('element-helper');
+    this.size = config.get('indent-size');
+    const normalQuotes = config.get('quotes') === 'double' ? '"': "'";
+    const pugQuotes = config.get('pug-quotes') === 'double' ? '"': "'";
+    this.quotes = this.isPug() ? pugQuotes : normalQuotes;
+
     let tag: TagObject | string | undefined = this.isPug() ?  this.getPugTag() : this.getPreTag();
     let attr = this.getPreAttr();
     if (this.isAttrValueStart(tag, attr)) {
