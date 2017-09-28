@@ -39,7 +39,7 @@ Element-UI is a great library. More and more projects use it. So, For helping de
 ```javascript
   "element-helper.language": "zh-CN",
   "element-helper.version": "1.3",
-  "element-helper.indent-size: 2,
+  "element-helper.indent-size": 2,
   "element-helper.quotes": "double",    // html vue qoutes
   "element-helper.pug-quotes": "single" // jade/pug quotes
 ```
