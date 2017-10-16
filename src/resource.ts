@@ -54,7 +54,7 @@ export default class Resource {
     }).catch(error => Promise.reject(error));
   }
 
-  static fixResource(file: string): void {
+  static fixResource(file: string, vs: any): void {
     const htmlPath = Path.join(Resource.ELEMENT_PATH, file);
     Resource.get(htmlPath)
       .then((content:string) => {
@@ -72,7 +72,7 @@ export default class Resource {
         let $ = cheerio.load(content);
 
         const jqScript = $(`<script type="text/javascript" src="${Path.join(Resource.RESOURCE_PATH, '../node_modules/jquery/dist/jquery.min.js')}"></script>`);
-        const fixScript = $(`<script type="text/javascript" src="${Path.join(Resource.RESOURCE_PATH, 'element', 'fix.js')}"></script>`);
+        const fixScript = $(`<script type="text/javascript" src="${Path.join(Resource.RESOURCE_PATH, 'element', `fix${vs}.js`)}"></script>`);
         const style = $(`<link href="${Path.join(Resource.RESOURCE_PATH, 'element', 'style.css')}" rel="stylesheet">`);
         $('body').append(jqScript).append(fixScript);
         $('head').append(style);
@@ -93,9 +93,9 @@ export default class Resource {
       for(let i = 0; i < files.length; ++i) {
         const status = fs.lstatSync(Path.join(Resource.ELEMENT_PATH, files[i]));
         if (status.isFile() && /index.html$/.test(files[i])) { // index.html entry
-          Resource.fixResource(files[i]);
+          Resource.fixResource(files[i], 1);
         } else if (status.isDirectory() && /^\d+\./.test(files[i])) { // version directory
-          Resource.fixResource(Path.join(files[i], 'index.html'));
+          Resource.fixResource(Path.join(files[i], 'index.html'), files[i].split('.')[0] || 1);
         } else {
           continue;
         }

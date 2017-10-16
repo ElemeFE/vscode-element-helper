@@ -91,15 +91,15 @@ const HTML_CONTENT = (query: Query) => {
   const version = config.get('version');
 
   let versionText = `${version}/`;
-  if (version === lastVersion) {
-    versionText = '';
-  }
+  // if (version === lastVersion) {
+  //   versionText = '';
+  // }
 
   let opts = ['<select class="docs-version">'];
   let selected = '';
   versions.forEach(item => {
-    selected = item === version ? 'selected="selected"' : '';
-    opts.push(`<option ${selected} value ="${item}">${item}</option>`);
+    selected = item === version ? ' selected="selected"' : '';
+    opts.push(`<option${selected} value ="${item}">${item}</option>`);
   });
   opts.push('</select>');
   const html = opts.join('');

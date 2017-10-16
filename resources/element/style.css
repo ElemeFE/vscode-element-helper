@@ -52,3 +52,20 @@
   color: #666;
   transition: 0.5s;
 }
+
+.page-component__scroll {
+	height: calc(100%) !important;
+	margin-top: 0 !important;
+}
+
+.page-component__nav {
+	margin-top: 0px !important;
+}
+
+.page-component__content {
+	padding: 0px !important;
+}
+
+.page-container {
+	width: 100%;
+}

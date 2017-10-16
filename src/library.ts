@@ -58,6 +58,8 @@ class Library {
   }
 
   fetchAllVersion(repos: RepoObject[]) {
+    cd(`${Resource.RESOURCE_PATH}/..`);
+    exec('npm update element-helper-json --save', { async: true });
     for (let i = 0; i < repos.length; ++i) {
       let repo = repos[i];
       this.fetchVersion(repo);
