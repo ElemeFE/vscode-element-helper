@@ -31,11 +31,11 @@ Element-UI is a great library. More and more projects use it. So, For helping de
 
 ![document](https://user-images.githubusercontent.com/1659577/27990775-4b7db888-6494-11e7-9b27-3ec7fa5f99b7.gif)
 
-### Version，Quotes, Indentation size and Language Switching
+### Version, Quotes, Indentation size and Language Switching
 
 1 - Enter `Preferences` -> `setting` or shortcut `cmd` + `,`
 
-2 - Modify language, version or indentation size what do you want 
+2 - Modify language, version or indentation size
 ```javascript
   "element-helper.language": "zh-CN",
   "element-helper.version": "1.3",
@@ -50,7 +50,7 @@ Document is off-line and auto synchronize with Element-UI official site.
 
 ### Keymap
 
-Default hot key is  `ctrl + cmd + z`( windows: `ctrl + win + z`). If it has conflicts with other software's hot key. You can customize it. see [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor)
+Default hot key is  `ctrl + cmd + z`( windows: `ctrl + win + z`). If it has conflict with other software's hot key. You can customize it. see [keybindings](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor)
 
 
 ## Autocomplete
