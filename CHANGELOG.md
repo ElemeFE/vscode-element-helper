@@ -1,5 +1,5 @@
 ## [0.5.1]
-- add version tip for attriutes
+- add version tip for attributes
 ## [0.5.0]
 - support element-ui 2.0
 ## [0.4.3]
