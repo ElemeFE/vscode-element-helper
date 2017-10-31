@@ -245,8 +245,10 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
   getTagSuggestion() {
     let suggestions = [];
 
+    let id = 100;
     for (let tag in TAGS) {
-      suggestions.push(this.buildTagSuggestion(tag, TAGS[tag]));
+      suggestions.push(this.buildTagSuggestion(tag, TAGS[tag], id));
+      id++;
     }
     return suggestions;
   }
@@ -296,7 +298,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     return suggestions;
   }
 
-  buildTagSuggestion(tag, tagVal) {
+  buildTagSuggestion(tag, tagVal, id) {
     const snippets = [];
     let index = 0;
     let that = this;
@@ -314,20 +316,21 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
 
     return {
       label: tag,
+      sortText: `0${id}${tag}`,
       insertText: new SnippetString(prettyHTML('<' + snippets.join(''), {indent_size: this.size}).substr(1)),
       kind: CompletionItemKind.Snippet,
-      detail: 'element-ui',
+      detail: `element-ui ${tagVal.version ? `(version: ${tagVal.version})` : ''}`,
       documentation: tagVal.description
     };
   }
 
-  buildAttrSuggestion({attr, tag, bind, method}, {description, type}) {
+  buildAttrSuggestion({attr, tag, bind, method}, {description, type, version}) {
     if ((method && type === "method") || (bind && type !== "method") || (!method && !bind)) {
       return {
         label: attr,
         insertText: (type && (type === 'flag')) ? `${attr} ` : new SnippetString(`${attr}=${this.quotes}$1${this.quotes}$0`),
         kind: (type && (type === 'method')) ? CompletionItemKind.Method : CompletionItemKind.Property,
-        detail:  tag ?  `<${tag}>` : 'element-ui',
+        detail:  tag ?  `<${tag}> ${version ? `(version: ${version})`: ''}` : `element-ui ${version ? `(version: ${version})`: ''}`,
         documentation: description
       };
     } else { return; }

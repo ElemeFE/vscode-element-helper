@@ -1,3 +1,7 @@
+## [0.5.1]
+- add version tip for attriutes
+## [0.5.0]
+- support element-ui 2.0
 ## [0.4.3]
 - support set indentation size of snippet.
 - support jade/pug.
