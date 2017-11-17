@@ -93,7 +93,7 @@ export default class Resource {
       for(let i = 0; i < files.length; ++i) {
         const status = fs.lstatSync(Path.join(Resource.ELEMENT_PATH, files[i]));
         if (status.isFile() && /index.html$/.test(files[i])) { // index.html entry
-          Resource.fixResource(files[i], 1);
+          Resource.fixResource(files[i], 2);
         } else if (status.isDirectory() && /^\d+\./.test(files[i])) { // version directory
           Resource.fixResource(Path.join(files[i], 'index.html'), files[i].split('.')[0] || 1);
         } else {

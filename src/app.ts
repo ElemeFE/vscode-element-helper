@@ -130,7 +130,6 @@ const HTML_CONTENT = (query: Query) => {
     <div class="docs-notice">${notice}</div>
     <iframe id="docs-frame" src="${iframeSrc}"></iframe>
     <script>
-      var defaultVersion = '${version}';
       var iframe = document.querySelector('#docs-frame');
       var link = document.querySelector('.docs-notice a');
       window.addEventListener('message', (e) => {
@@ -150,13 +149,8 @@ const HTML_CONTENT = (query: Query) => {
         var version = this.options[this.selectedIndex].value;
         var originalSrc = iframe.src;
         var arr = originalSrc.split(new RegExp('/?[0-9.]*/main.html'));
-        if(defaultVersion === version) {
-          iframe.src = arr.join('/main.html');
-          link.href = link.href.replace(new RegExp('/?[0-9.]*/index.html'), '/index.html');
-        } else {
-          iframe.src = arr.join('/' + version + '/main.html');
-          link.href = link.href.replace(new RegExp('/?[0-9.]*/index.html'), '/' + version + '/index.html');
-        }
+        iframe.src = arr.join('/' + version + '/main.html');
+        link.href = link.href.replace(new RegExp('/?[0-9.]*/index.html'), '/' + version + '/index.html');
       }, false);
     </script>
     </body>`;
