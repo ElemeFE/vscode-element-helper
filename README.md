@@ -2,7 +2,7 @@
 
 > VSCode-Element-Helper is a VS Code extension for Element-UI. If you use ATOM editor, please go to [ATOM version](https://github.com/ElemeFE/element-helper)
 
-Element-UI is a great library. More and more projects use it. So, For helping developer write by Element-UI more efficient, VSCode-Element-Helper is born.
+Element-UI is a great library. More and more projects use it. So, For helping developer write more efficient by Element-UI, VSCode-Element-Helper is born.
 
 ## Feature
 
