@@ -99,7 +99,11 @@ const HTML_CONTENT = (query: Query) => {
   let selected = '';
   versions.forEach(item => {
     selected = item === version ? ' selected="selected"' : '';
-    opts.push(`<option${selected} value ="${item}">${item}</option>`);
+    // if language is spanish, verison < 2.0 no documents
+    if (language === 'es' && item < '2.0') {
+    } else {
+      opts.push(`<option${selected} value ="${item}">${item}</option>`);
+    }
   });
   opts.push('</select>');
   const html = opts.join('');
@@ -113,7 +117,8 @@ const HTML_CONTENT = (query: Query) => {
 
   const notice = ({
     'zh-CN': `版本：${html}，在线示例请在浏览器中<a href="${href}">查看</a>`,
-    'en-US': `Version: ${html}, view online examples in <a href="${href}">browser</a>`
+    'en-US': `Version: ${html}, view online examples in <a href="${href}">browser</a>`,
+    'es': `Versión: ${html}, ejemplo en línea en la <a href="${href}">vista</a> del navegador`
   })[language];
 
   return `
