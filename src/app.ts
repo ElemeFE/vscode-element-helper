@@ -451,7 +451,7 @@ export class ElementCompletionItemProvider implements CompletionItemProvider {
     function build(tag, {subtags, defaults}, snippets) {
       let attrs = [];
       defaults && defaults.forEach((item, i) => {
-        attrs.push(`${item}='$${index + i + 1}'`);
+        attrs.push(`${item}=${that.quotes}$${index + i + 1}${that.quotes}`);
       });
       snippets.push(`${' '.repeat(index * that.size)}${tag}(${attrs.join(' ')})`);
       index++;

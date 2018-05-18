@@ -107,12 +107,13 @@
     "@types/node": "^6.0.40",
     "mocha": "^2.3.3",
     "typescript": "^2.0.3",
-    "vscode": "1.1.0"
+    "vscode": "^1.1.16"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
     "element-gh-pages": "^1.0.24",
     "element-helper-json": "^2.0.5",
+    "hoek": "^5.0.3",
     "jquery": "^3.2.1",
     "pretty": "^2.0.0",
     "shelljs": "^0.7.8"
