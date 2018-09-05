@@ -107,7 +107,7 @@
     "@types/node": "^6.0.40",
     "mocha": "^2.3.3",
     "typescript": "^2.0.3",
-    "vscode": "^1.1.16"
+    "vscode": "^1.1.21"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
