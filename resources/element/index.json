@@ -16,6 +16,41 @@
     },
     {
       "type": "basic",
+      "name": "Container 布局容器",
+      "path": "container",
+      "tag": "el-container",
+      "description": "el-container,Container 布局容器"
+    },
+    {
+      "type": "basic",
+      "name": "Container 布局容器",
+      "path": "container",
+      "tag": "el-header",
+      "description": "el-header,Container 布局容器"
+    },
+    {
+      "type": "basic",
+      "name": "Container 布局容器",
+      "path": "container",
+      "tag": "el-aside",
+      "description": "el-aside,Container 布局容器"
+    },
+    {
+      "type": "basic",
+      "name": "Container 布局容器",
+      "path": "container",
+      "tag": "el-main",
+      "description": "el-main,Container 布局容器"
+    },
+    {
+      "type": "basic",
+      "name": "Container 布局容器",
+      "path": "container",
+      "tag": "el-footer",
+      "description": "el-footer,Container 布局容器"
+    },
+    {
+      "type": "basic",
       "name": "Color 色彩",
       "path": "color",
       "tag": "color",
@@ -44,17 +79,17 @@
     },
     {
       "type": "form",
-      "name": "Radio 单选框组",
+      "name": "Radio 单选框",
       "path": "radio",
       "tag": "el-radio",
       "description": "el-radio,Radio 单选框"
     },
     {
       "type": "form",
-      "name": "Radio 单选框组",
+      "name": "Radio 单选框",
       "path": "radio",
       "tag": "el-radio-group",
-      "description": "el-radio-group,Radio 单选框组"
+      "description": "el-radio-group,Radio 单选框"
     },
     {
       "type": "form",
