@@ -5,14 +5,15 @@ const fs  = require('fs');
 const Path = require('path');
 const cheerio = require("cheerio");
 const http = require('http');
+const https = require('https');
 
 export default class Resource {
   // resources local path
   static RESOURCE_PATH: string = Path.join(__dirname, '..', '..', 'resources');
   static ELEMENT_PATH: string = Path.join(__dirname, '..', '..', 'node_modules', 'element-gh-pages');
   static URL_REG: RegExp = /((?:src|href)\s*=\s*)(['"])(\/\/[^'"]*)\2/g;
-  static ELEMENT_VERSION_URL: string = 'http://element.eleme.io/versions.json';
-  static ELEMENT_HOME_URL: string = 'http://element.eleme.io/';
+  static ELEMENT_VERSION_URL: string = 'https://element.eleme.io/versions.json';
+  static ELEMENT_HOME_URL: string = 'https://element.eleme.io/';
   static RESOURCE_REPO: string = 'repos.json';
 
   static get(filePath: string) {
@@ -28,7 +29,8 @@ export default class Resource {
 
   static getFromUrl(url: string, filename?: string) {
     return new Promise((resolve, reject) => {
-      http.get(url, (res) => {
+      const req = /^https:\/\//.test(url) ? https : http;
+      req.get(url, (res) => {
         const { statusCode } = res;
         let error;
         if (statusCode !== 200) {
@@ -61,10 +63,11 @@ export default class Resource {
         const matched = [];
         content = content.replace(Resource.URL_REG, (match, one, two, three)=> {
           const name = Path.basename(three);
-          const url = `http:${three}`;
+          const url = `https:${three}`;
+          const url2 = `http:${three}`;
           Resource.getFromUrl(url, Path.join(Path.dirname(htmlPath), name)).catch(error =>{
             // one more again
-            Resource.getFromUrl(url, Path.join(Path.dirname(htmlPath), name));
+            Resource.getFromUrl(url2, Path.join(Path.dirname(htmlPath), name));
           });
           return `${one}${two}${name}${two}`;
         });

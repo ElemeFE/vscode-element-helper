@@ -60,14 +60,15 @@
         },
         "element-helper.version": {
           "type": "string",
-          "default": "1.4",
+          "default": "2.4",
           "description": "Document version of Element UI",
           "enum": [
             "1.4",
             "2.0",
             "2.1",
             "2.2",
-            "2.3"
+            "2.3",
+            "2.4"
           ]
         },
         "element-helper.indent-size": {
@@ -111,7 +112,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
-    "element-gh-pages": "^1.0.24",
+    "element-gh-pages": "^1.0.25",
     "element-helper-json": "^2.0.5",
     "hoek": "^5.0.3",
     "jquery": "^3.2.1",

@@ -12,7 +12,14 @@ export function activate(context: vscode.ExtensionContext) {
     let completionItemProvider = new ElementCompletionItemProvider();
     let registration = vscode.workspace.registerTextDocumentContentProvider(SCHEME, docs);
 
-    let completion = vscode.languages.registerCompletionItemProvider(['pug', 'jade', 'vue', 'html'], completionItemProvider, '', ' ', ':', '<', '"', "'", '/', '@', '(');
+    let completion = vscode.languages.registerCompletionItemProvider([{
+        language: 'pug', scheme: 'file'
+    }, {
+        language: 'jade', scheme: 'file'
+    }, {
+        language: 'vue', scheme: 'file'
+    }, {
+        language: 'html', scheme: 'file'}], completionItemProvider, '', ' ', ':', '<', '"', "'", '/', '@', '(');
     let vueLanguageConfig = vscode.languages.setLanguageConfiguration('vue', {wordPattern: app.WORD_REG});
     let pugLanguageConfig = vscode.languages.setLanguageConfiguration('pug', {wordPattern: app.WORD_REG});
     let jadeLanguageConfig = vscode.languages.setLanguageConfiguration('jade', {wordPattern: app.WORD_REG});
