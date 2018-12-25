@@ -6,8 +6,21 @@ import {
     SnippetString, Range
 } from 'vscode';
 import Resource from './resource';
-import * as TAGS from 'element-helper-json/element-tags.json';
+import * as kebabCaseTAGS from 'element-helper-json/element-tags.json';
 import * as ATTRS from 'element-helper-json/element-attributes.json';
+
+let TAGS = {};
+for (const key in kebabCaseTAGS) {
+  if (kebabCaseTAGS.hasOwnProperty(key)) {
+    const tag = kebabCaseTAGS[key];
+    TAGS[key] = tag;
+    let camelCase = key.replace(/\-(\w)/g, function(all, letter) {
+      return letter.toUpperCase();
+    });
+    camelCase = camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+    TAGS[camelCase] = kebabCaseTAGS[key];
+  }
+}
 
 const prettyHTML = require('pretty');
 const Path = require('path');
