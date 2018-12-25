@@ -57,8 +57,6 @@ for (const key in kebabCaseATTRS) {
   }
 }
 
-console.log(ATTRS);
-
 function toUpperCase(key: string): string {
     let camelCase = key.replace(/\-(\w)/g, function(all, letter) {
       return letter.toUpperCase();
