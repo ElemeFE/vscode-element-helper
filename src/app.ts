@@ -221,7 +221,7 @@ export class ElementDocsContentProvider implements TextDocumentContentProvider {
 export class ElementCompletionItemProvider implements CompletionItemProvider {
   private _document: TextDocument;
   private _position: Position;
-  private tagReg: RegExp = /<([\w-]+)\s+/g;
+  private tagReg: RegExp = /<([\w-]+)\s*/g;
   private attrReg: RegExp = /(?:\(|\s*)(\w+)=['"][^'"]*/;
   private tagStartReg:  RegExp = /<([\w-]*)$/;
   private pugTagStartReg: RegExp = /^\s*[\w-]*$/;
