@@ -6,8 +6,8 @@ import {
     SnippetString, Range
 } from 'vscode';
 import Resource from './resource';
-import * as TAGS from 'element-helper-json/element-tags.json';
-import * as ATTRS from 'element-helper-json/element-attributes.json';
+import * as kebabCaseTAGS from 'element-helper-json/element-tags.json';
+import * as kebabCaseATTRS from 'element-helper-json/element-attributes.json';
 
 const prettyHTML = require('pretty');
 const Path = require('path');
@@ -23,6 +23,47 @@ export interface TagObject{
   text: string,
   offset: number
 };
+
+let TAGS = {};
+for (const key in kebabCaseTAGS) {
+  if (kebabCaseTAGS.hasOwnProperty(key)) {
+    const tag = kebabCaseTAGS[key];
+    let subtags:Array<string>|undefined = tag.subtags;
+    TAGS[key] = tag;
+
+    let camelCase = toUpperCase(key);
+    TAGS[camelCase] = kebabCaseTAGS[key];
+    if(subtags) {
+      subtags = subtags.map(item => toUpperCase(item));
+      TAGS[camelCase].subtags = subtags;
+    }
+  }
+}
+
+let ATTRS = {};
+for (const key in kebabCaseATTRS) {
+  if (kebabCaseATTRS.hasOwnProperty(key)) {
+    const element = kebabCaseATTRS[key];
+    ATTRS[key] = element;
+    const tagAttrs = key.split('/');
+    const hasTag = tagAttrs.length > 1;
+    let tag = '';
+    let attr = '';
+    if (hasTag) {
+        tag = toUpperCase(tagAttrs[0]) + '/';
+        attr = tagAttrs[1];
+        ATTRS[tag + attr] = element;
+    }
+  }
+}
+
+function toUpperCase(key: string): string {
+    let camelCase = key.replace(/\-(\w)/g, function(all, letter) {
+      return letter.toUpperCase();
+    });
+    camelCase = camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+    return camelCase;
+}
 
 export function encodeDocsUri(query?: Query): Uri {
     return Uri.parse(`${SCHEME}://search?${JSON.stringify(query)}`);
@@ -180,7 +221,7 @@ export class ElementDocsContentProvider implements TextDocumentContentProvider {
 export class ElementCompletionItemProvider implements CompletionItemProvider {
   private _document: TextDocument;
   private _position: Position;
-  private tagReg: RegExp = /<([\w-]+)\s+/g;
+  private tagReg: RegExp = /<([\w-]+)\s*/g;
   private attrReg: RegExp = /(?:\(|\s*)(\w+)=['"][^'"]*/;
   private tagStartReg:  RegExp = /<([\w-]*)$/;
   private pugTagStartReg: RegExp = /^\s*[\w-]*$/;
