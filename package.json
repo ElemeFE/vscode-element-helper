@@ -68,7 +68,8 @@
             "2.1",
             "2.2",
             "2.3",
-            "2.4"
+            "2.4",
+            "2.5"
           ]
         },
         "element-helper.indent-size": {
@@ -112,8 +113,8 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
-    "element-gh-pages": "^1.0.25",
-    "element-helper-json": "^2.0.5",
+    "element-gh-pages": "^1.0.26",
+    "element-helper-json-new": "^2.0.6",
     "hoek": "^5.0.3",
     "jquery": "^3.2.1",
     "pretty": "^2.0.0",
