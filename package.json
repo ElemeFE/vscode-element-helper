@@ -2,7 +2,7 @@
   "name": "vscode-element-helper",
   "displayName": "vscode-element-helper",
   "description": "A vscode extension for Element-UI",
-  "version": "0.6.1",
+  "version": "0.5.5",
   "publisher": "ElemeFE",
   "repository": {
     "type": "git",
