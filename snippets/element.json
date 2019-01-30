@@ -73,24 +73,5 @@
       "});"
     ],
     "description": "notify"
-  },
-  "vue class": {
-    "prefix": "vClass",
-    "body": [
-      "<template>",
-      "  <div class='${1:g_content}'>",
-      "\t\t",
-      "  </div>",
-      "</template>",
-      "<script>",
-      "import { Component, Vue } from 'vue-property-decorator';",
-      "@Component",
-      "export default class ${2:ComponentName} extends Vue {",
-      "\t\t",
-      "}",
-      "</script>",
-      "\t"
-    ],
-    "description": "vue class component"
   }
 }

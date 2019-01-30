@@ -6,23 +6,12 @@ import {
     SnippetString, Range
 } from 'vscode';
 import Resource from './resource';
-import * as kebabCaseTAGS from 'element-helper-json/element-tags.json';
-import * as kebabCaseATTRS from 'element-helper-json/element-attributes.json';
+import * as kebabCaseTAGS from 'element-helper-json-new/element-tags.json';
+import * as kebabCaseATTRS from 'element-helper-json-new/element-attributes.json';
 
 const prettyHTML = require('pretty');
 const Path = require('path');
 const fs = require('fs');
-
-export const SCHEME = 'element-helper';
-
-export interface Query {
-    keyword: string
-};
-
-export interface TagObject{
-  text: string,
-  offset: number
-};
 
 let TAGS = {};
 for (const key in kebabCaseTAGS) {
@@ -64,6 +53,17 @@ function toUpperCase(key: string): string {
     camelCase = camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
     return camelCase;
 }
+
+export const SCHEME = 'element-helper';
+
+export interface Query {
+    keyword: string
+};
+
+export interface TagObject{
+  text: string,
+  offset: number
+};
 
 export function encodeDocsUri(query?: Query): Uri {
     return Uri.parse(`${SCHEME}://search?${JSON.stringify(query)}`);

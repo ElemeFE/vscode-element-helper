@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
     }, {
         language: 'vue', scheme: 'file'
     }, {
-        language: 'html', scheme: 'file'}], completionItemProvider, '\n', '', ' ', ':', '<', '"', "'", '/', '@', '(');
+        language: 'html', scheme: 'file'}], completionItemProvider, '', ' ', ':', '<', '"', "'", '/', '@', '(');
     let vueLanguageConfig = vscode.languages.setLanguageConfiguration('vue', {wordPattern: app.WORD_REG});
     let pugLanguageConfig = vscode.languages.setLanguageConfiguration('pug', {wordPattern: app.WORD_REG});
     let jadeLanguageConfig = vscode.languages.setLanguageConfiguration('jade', {wordPattern: app.WORD_REG});

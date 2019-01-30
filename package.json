@@ -2,7 +2,7 @@
   "name": "vscode-element-helper",
   "displayName": "vscode-element-helper",
   "description": "A vscode extension for Element-UI",
-  "version": "0.6.1",
+  "version": "0.5.5",
   "publisher": "ElemeFE",
   "repository": {
     "type": "git",
@@ -68,7 +68,8 @@
             "2.1",
             "2.2",
             "2.3",
-            "2.4"
+            "2.4",
+            "2.5"
           ]
         },
         "element-helper.indent-size": {
@@ -108,12 +109,12 @@
     "@types/node": "^6.0.40",
     "mocha": "^5.2.0",
     "typescript": "^2.0.3",
-    "vscode": "^1.1.21"
+    "vscode": "^1.1.28"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
-    "element-gh-pages": "^1.0.25",
-    "element-helper-json": "^2.0.5",
+    "element-gh-pages": "^1.0.26",
+    "element-helper-json-new": "^2.0.6",
     "hoek": "^5.0.3",
     "jquery": "^3.2.1",
     "pretty": "^2.0.0",

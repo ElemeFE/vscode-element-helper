@@ -59,7 +59,7 @@ class Library {
 
   fetchAllVersion(repos: RepoObject[]) {
     cd(`${Resource.RESOURCE_PATH}/..`);
-    exec('npm update element-helper-json --save', { async: true });
+    exec('npm update element-helper-json-new --save', { async: true });
     for (let i = 0; i < repos.length; ++i) {
       let repo = repos[i];
       this.fetchVersion(repo);
@@ -85,7 +85,6 @@ class Library {
     Resource.get(Path.join(Resource.ELEMENT_PATH, 'versions.json')).then((local: string) => {
       Resource.getFromUrl(Resource.ELEMENT_VERSION_URL)
         .then((online: string) => {
-          const oldVersions = this.getValues(JSON.parse(local));
           const newVersions = this.getValues(JSON.parse(online));
           if (!this.isSame(JSON.parse(local), JSON.parse(online))) {
             cd(`${Resource.RESOURCE_PATH}/..`);
@@ -105,6 +104,8 @@ class Library {
               Resource.updateResource();
             }
           }
+        }).catch(() => {
+          window.showInformationMessage('Please check whether you can access the external network');
         });
     });
   }
