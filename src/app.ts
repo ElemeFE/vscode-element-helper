@@ -21,7 +21,7 @@ for (const key in kebabCaseTAGS) {
     TAGS[key] = tag;
 
     let camelCase = toUpperCase(key);
-    TAGS[camelCase] = kebabCaseTAGS[key];
+    TAGS[camelCase] = JSON.parse(JSON.stringify(kebabCaseTAGS[key]));
     if(subtags) {
       subtags = subtags.map(item => toUpperCase(item));
       TAGS[camelCase].subtags = subtags;
@@ -41,7 +41,7 @@ for (const key in kebabCaseATTRS) {
     if (hasTag) {
         tag = toUpperCase(tagAttrs[0]) + '/';
         attr = tagAttrs[1];
-        ATTRS[tag + attr] = element;
+        ATTRS[tag + attr] = JSON.parse(JSON.stringify(element));
     }
   }
 }
