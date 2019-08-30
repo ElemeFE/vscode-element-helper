@@ -1,123 +1,130 @@
 {
-  "name": "vscode-element-helper",
-  "displayName": "vscode-element-helper",
-  "description": "A vscode extension for Element-UI",
-  "version": "0.5.6",
-  "publisher": "ElemeFE",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElemeFE/vscode-element-helper"
-  },
-  "engines": {
-    "vscode": "^1.12.0"
-  },
-  "categories": [
-    "Snippets",
-    "Other"
-  ],
-  "activationEvents": [
-    "onLanguage:html",
-    "onLanguage:vue",
-    "onLanguage:jade",
-    "onLanguage:pug",
-    "onCommand:element-helper.searchUnderCursor"
-  ],
-  "main": "./out/src/extension",
-  "icon": "element.png",
-  "contributes": {
-    "commands": [
-      {
-        "command": "element-helper.searchUnderCursor",
-        "title": "element-helper.search"
-      }
+    "name": "vscode-element-helper",
+    "displayName": "vscode-element-helper",
+    "description": "A vscode extension for Element-UI",
+    "version": "0.5.6",
+    "publisher": "ElemeFE",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ElemeFE/vscode-element-helper"
+    },
+    "engines": {
+        "vscode": "^1.12.0"
+    },
+    "categories": [
+        "Snippets",
+        "Other"
     ],
-    "keybindings": [
-      {
-        "command": "element-helper.searchUnderCursor",
-        "key": "ctrl+cmd+z",
-        "when": "editorTextFocus"
-      }
+    "activationEvents": [
+        "onLanguage:html",
+        "onLanguage:vue",
+        "onLanguage:jade",
+        "onLanguage:pug",
+        "onCommand:element-helper.searchUnderCursor"
     ],
-    "snippets": [
-      {
-        "language": "javascript",
-        "path": "./snippets/element.json"
-      }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "ELement Helper Configuration",
-      "properties": {
-        "element-helper.language": {
-          "type": "string",
-          "default": "zh-CN",
-          "description": "Document Language of Element UI",
-          "enum": [
-            "zh-CN",
-            "en-US",
-            "es"
-          ]
-        },
-        "element-helper.version": {
-          "type": "string",
-          "default": "2.4",
-          "description": "Document version of Element UI",
-          "enum": [
-            "1.4",
-            "2.0",
-            "2.1",
-            "2.2",
-            "2.3",
-            "2.4",
-            "2.5"
-          ]
-        },
-        "element-helper.indent-size": {
-          "type": "number",
-          "default": 2,
-          "description": "Indentation size of snippets"
-        },
-        "element-helper.quotes": {
-          "type": "string",
-          "default": "double",
-          "description": "Normal quotes of autocomplete",
-          "enum": [
-            "single",
-            "double"
-          ]
-        },
-        "element-helper.pug-quotes": {
-          "type": "string",
-          "default": "single",
-          "description": "Pug quotes of autocomplete",
-          "enum": [
-            "single",
-            "double"
-          ]
+    "main": "./out/src/extension",
+    "icon": "element.png",
+    "contributes": {
+        "commands": [
+            {
+                "command": "element-helper.searchUnderCursor",
+                "title": "element-helper.search"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "element-helper.searchUnderCursor",
+                "key": "ctrl+cmd+z",
+                "when": "editorTextFocus"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "javascript",
+                "path": "./snippets/element.json"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "ELement Helper Configuration",
+            "properties": {
+                "element-helper.language": {
+                    "type": "string",
+                    "default": "zh-CN",
+                    "description": "Document Language of Element UI",
+                    "enum": [
+                        "zh-CN",
+                        "en-US",
+                        "es"
+                    ]
+                },
+                "element-helper.version": {
+                    "type": "string",
+                    "default": "2.12",
+                    "description": "Document version of Element UI",
+                    "enum": [
+                        "1.4",
+                        "2.0",
+                        "2.1",
+                        "2.2",
+                        "2.3",
+                        "2.4",
+                        "2.5",
+                        "2.6",
+                        "2.7",
+                        "2.8",
+                        "2.9",
+                        "2.10",
+                        "2.11",
+                        "2.12"
+                    ]
+                },
+                "element-helper.indent-size": {
+                    "type": "number",
+                    "default": 2,
+                    "description": "Indentation size of snippets"
+                },
+                "element-helper.quotes": {
+                    "type": "string",
+                    "default": "double",
+                    "description": "Normal quotes of autocomplete",
+                    "enum": [
+                        "single",
+                        "double"
+                    ]
+                },
+                "element-helper.pug-quotes": {
+                    "type": "string",
+                    "default": "single",
+                    "description": "Pug quotes of autocomplete",
+                    "enum": [
+                        "single",
+                        "double"
+                    ]
+                }
+            }
         }
-      }
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.32",
+        "@types/node": "^6.0.40",
+        "mocha": "^5.2.0",
+        "typescript": "^2.0.3",
+        "vscode": "^1.1.28"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.1",
+        "element-gh-pages": "^1.0.26",
+        "element-helper-json-new": "^2.0.6",
+        "hoek": "^5.0.3",
+        "jquery": "^3.2.1",
+        "pretty": "^2.0.0",
+        "shelljs": "^0.7.8"
     }
-  },
-  "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test"
-  },
-  "devDependencies": {
-    "@types/mocha": "^2.2.32",
-    "@types/node": "^6.0.40",
-    "mocha": "^5.2.0",
-    "typescript": "^2.0.3",
-    "vscode": "^1.1.28"
-  },
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.1",
-    "element-gh-pages": "^1.0.26",
-    "element-helper-json-new": "^2.0.6",
-    "hoek": "^5.0.3",
-    "jquery": "^3.2.1",
-    "pretty": "^2.0.0",
-    "shelljs": "^0.7.8"
-  }
 }
